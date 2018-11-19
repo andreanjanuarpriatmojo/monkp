@@ -154,10 +154,9 @@ class AuthController extends Controller {
 
 			return redirect($this->redirectPath());
 		}
-		else
-		{
-			return redirect()->back()->withErrors(['error' => 'Tidak bisa register sekarang.']);
-		}
+		
+		return redirect()->back()->withErrors(['error' => 'Tidak bisa register sekarang.']);
+		
 	}
 
 	/**

@@ -20,12 +20,14 @@ class User extends Model implements AuthenticatableContract {
 				return 'ADMIN';
 			} else if ($this->personable->nip == '1') {
 				return 'TU';
-			} else {
-				return 'LECTURER';
 			}
-		} else {
-			return 'UNKNOWN';
+			
+			return 'LECTURER';
+			
 		}
+
+		return 'UNKNOWN';
+		
 	}
 
 	public function personable() {

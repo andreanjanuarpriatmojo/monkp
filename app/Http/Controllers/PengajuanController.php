@@ -177,53 +177,52 @@ class PengajuanController extends Controller {
 		if($validator->fails())
 		{
 			$error="File size more than 500KB";
+			return Response::json(['success' => true,'error'=> $error]); 
 
 		}
 		else
 		if(($ext!="jpg")&&($ext!="jpeg")&&($ext!="pdf")&&($ext!="JPG")&&($ext!="JPEG")&&($ext!="PDF"))
 		{
 			$error="File is not an jpg/jpeg/pdf your file extension is ".$ext;
+			return Response::json(['success' => true,'error'=> $error]); 
 		}	
-		else
+
+		$input = $request->image;
+		//$new_photo_name = $request->image->getClientOriginalExtension();
+		$extension = $input->getClientOriginalExtension();
+		$new_photo_name = $input->getClientOriginalName();
+		$id=$request->id;
+		$new_photo_name = $id;
+	
+		if (file_exists(public_path('surat_keterangan/'.$new_photo_name)))
 		{
-			$input = $request->image;
-			//$new_photo_name = $request->image->getClientOriginalExtension();
-			$extension = $input->getClientOriginalExtension();
-			$new_photo_name = $input->getClientOriginalName();
-			$id=$request->id;
-			$new_photo_name = $id;
-		
-			if (file_exists(public_path('surat_keterangan/'.$new_photo_name)))
-			{
-				$error="File Exist";
-			// get current time and append the upload file extension to it,
-			// then put that name to $photoName variable
-	        }
-	        
-			$photoName = $new_photo_name.'.'.$ext;
-			//$photoName = $new_photo_name;
-			
-			//talk the select file and move it public directory and make avatars
-			//folder if doesn't exsit then give it that unique name.
-			
-			$input->move(public_path('surat_keterangan'), $photoName);
-			if (file_exists(public_path('surat_keterangan/'.$photoName)))
-			{
-				$group=Group::find($id);
-				$group->status="1";
-				$group->nama_file=$photoName;
-				$group->save();
-				$error="File Upload Sukses";
-				return Response::json(['success' => true,'error'=> $error]); 
-			}
-	        else
-	        {
-	        	$group=Group::find($id);
-				$group->status="0";
-				$group->save();
-	        	$error="File Upload Gagal";
-	        }
+			$error="File Exist";
+		// get current time and append the upload file extension to it,
+		// then put that name to $photoName variable
 		}
+		
+		$photoName = $new_photo_name.'.'.$ext;
+		//$photoName = $new_photo_name;
+		
+		//talk the select file and move it public directory and make avatars
+		//folder if doesn't exsit then give it that unique name.
+		
+		$input->move(public_path('surat_keterangan'), $photoName);
+		if (file_exists(public_path('surat_keterangan/'.$photoName)))
+		{
+			$group=Group::find($id);
+			$group->status="1";
+			$group->nama_file=$photoName;
+			$group->save();
+			$error="File Upload Sukses";
+			return Response::json(['success' => true,'error'=> $error]); 
+		}
+
+		$group=Group::find($id);
+		$group->status="0";
+		$group->save();
+		$error="File Upload Gagal";
+			
 		return Response::json(['success' => true,'error'=> $error]); 
     }
     public function nohp(Request $r)

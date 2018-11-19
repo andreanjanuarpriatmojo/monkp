@@ -66,6 +66,10 @@ class AdminController extends Controller {
 		$all = true;
 		$semester_id = $request->input('semester');
 		$tab = $request->input('tab');
+		$groups;
+		$gr;
+		$lects;
+		$x;
 		if(Semester::find($semester_id) != null) {
 			$all = false;
 			$groups = Group::where('semester_id',$semester_id)->with('members')->get();
@@ -74,36 +78,27 @@ class AdminController extends Controller {
 				$q->where('semester_id', $semester_id);
 			})->get();
 			$gr = Group::where('lecturer_id','!=',0)->where('semester_id',$semester_id)->orderBy('lecturer_id')->get();
-			$jmlpeserta=array();
-			foreach ($lects as $x) {
-				$jmlpeserta[$x->id]=0;
-			}
-			foreach ($gr as $x) {
-				foreach ($x->students as $member) {
-					$jmlpeserta[$x->lecturer_id]=$jmlpeserta[$x->lecturer_id]+1;
-				}
-			}
-			arsort($jmlpeserta);
-			$sort=array_keys($jmlpeserta);
 		}
-		else {
+		else if(Semester::find($semester_id) == null){
 			$all = true;
 			$groups = Group::with('members')->get();
 			$corps=Corporation::get();
 			$lects=Lecturer::where('nip','!=',0)->where('nip','!=',1)->orderBy('initial')->get();
 			$gr = Group::where('lecturer_id','!=',0)->orderBy('lecturer_id')->get();
-			$jmlpeserta=array();
-			foreach ($lects as $x) {
-				$jmlpeserta[$x->id]=0;
-			}
-			foreach ($gr as $x) {
-				foreach ($x->students as $member) {
-					$jmlpeserta[$x->lecturer_id]=$jmlpeserta[$x->lecturer_id]+1;
-				}
-			}
-			arsort($jmlpeserta);
-			$sort=array_keys($jmlpeserta);
 		}
+
+		$jmlpeserta=array();
+		foreach ($lects as $x) {
+			$jmlpeserta[$x->id]=0;
+		}
+		foreach ($gr as $x) {
+			foreach ($x->students as $member) {
+				$jmlpeserta[$x->lecturer_id]=$jmlpeserta[$x->lecturer_id]+1;
+			}
+		}
+		arsort($jmlpeserta);
+		$sort=array_keys($jmlpeserta);
+
 		if (isset($_GET['tab']))
 			$aktif_tab = $_GET['tab'];
 
@@ -134,9 +129,8 @@ class AdminController extends Controller {
 			return redirect('stats/' . $req);
 		} else if ($semester_id == null || Semester::find($semester_id) == null) {
 			$all = true;
-		} else {
-			$all = false;
 		}
+		$all = false;
 
 		$where = $all ? '' : "AND groups.semester_id = $semester_id";
 
@@ -189,9 +183,8 @@ class AdminController extends Controller {
 			$all = false;
 		} else if ($semester_id == null || Semester::find($semester_id) == null) {
 			$all = true;
-		} else {
-			$all = false;
 		}
+		$all = false;
 
 		$members = $all ? Member::get() : Member::whereHas('group',
 			function ($q) use($semester_id) {

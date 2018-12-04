@@ -70,7 +70,7 @@ class AdminController extends Controller {
 			$all = false;
 			$groups = Group::where('semester_id',$SemesterId)->with('members')->get();
 			$lects=Lecturer::where('nip','!=',0)->where('nip','!=',1)->orderBy('initial')->get();
-			$corps=Corporation::whereHas('groups',function($q)use($semester_id){
+			$corps=Corporation::whereHas('groups',function($q)use($SemesterId){
 				$q->where('semester_id', $SemesterId);
 			})->get();
 			$group = Group::where('lecturer_id','!=',0)->where('semester_id',$SemesterId)->orderBy('lecturer_id')->get();
@@ -109,7 +109,7 @@ class AdminController extends Controller {
 
 		$aktif_tab=$tab;
 
-		$data = compact('all','semester_id','groups','corps','aktif_tab','jmlpeserta','sort');
+		$data = compact('all','SemesterId','groups','corps','aktif_tab','jmlpeserta','sort');
 		return view('inside.statistic',$data);
 
 		$lects = Corporation::hydrateRaw(
@@ -138,10 +138,10 @@ class AdminController extends Controller {
 			$all = false;
 		}
 
-		$where = $all ? '' : "AND groups.semester_id = $semester_id";
+		$where = $all ? '' : "AND groups.SemesterId = $SemesterId";
 
 		$groups = Group::with('members');
-		$groups = $all ? $groups->get() : $groups->where('semester_id', $SemesterId)->get();
+		$groups = $all ? $groups->get() : $groups->where('SemesterId', $SemesterId)->get();
 		$lects = Corporation::hydrateRaw(
 				"SELECT * FROM (
 					SELECT lecturers.*, COUNT(groups.id) AS lect_count
@@ -172,7 +172,7 @@ class AdminController extends Controller {
 
 		$aktif_tab = $_GET['tab'];
 
-		$data = compact('groups', 'corps', 'lects', 'all', 'semester_id','aktif_tab');
+		$data = compact('groups', 'corps', 'lects', 'all', 'SemesterId','aktif_tab');
 		return Response::json($data);
 	}
 
@@ -194,8 +194,8 @@ class AdminController extends Controller {
 		}
 
 		$members = $all ? Member::get() : Member::whereHas('group',
-			function ($q) use($semester_id) {
-				$q->where('semester_id', $$SemesterId);
+			function ($q) use($SemesterId) {
+				$q->where('SemesterId', $SemesterId);
 			}
 		)->get();
 
@@ -207,7 +207,7 @@ class AdminController extends Controller {
 
 		$members = new Pagination($members, $total, $perPage, $page, $option);
 
-		$data = compact('members', 'semester_id', 'all');
+		$data = compact('members', 'SemesterId', 'all');
 		return view('inside.table', $data);
 	}
 

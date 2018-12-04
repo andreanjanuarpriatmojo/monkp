@@ -32,20 +32,44 @@
         </div>
         <div class="form-group">
           <label class="control-label col-md-3">Mulai Semester</label>
+          <!-- <div class="col-md-2">
+            <input type="date" name="start_date" data-provide="datepicker" class="datepicker form-control input-sm">
+          </div> -->
           <div class="col-md-2">
-            <input type="text" name="start_date" data-provide="datepicker" class="datepicker form-control input-sm">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input type="date" name="start_date" class="form-control pull-right" id="reservation">
+            </div>
           </div>
         </div>
         <div class="form-group">
           <label class="control-label col-md-3">Akhir Semester</label>
+          <!-- <div class="col-md-2">
+            <input type="date" name="end_date" data-provide="datepicker" class="datepicker form-control input-sm">
+          </div> -->
           <div class="col-md-2">
-            <input type="text" name="end_date" data-provide="datepicker" class="datepicker form-control input-sm">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input type="date" name="end_date" class="form-control pull-right" id="reservation">
+            </div>
           </div>
         </div>
         <div class="form-group">
           <label class="control-label col-md-3">Batas Akhir Pembuatan Akun</label>
+          <!-- <div class="col-md-2">
+            <input type="date" name="user_due_date" data-provide="datepicker" class="datepicker form-control input-sm">
+          </div> -->
           <div class="col-md-2">
-            <input type="text" name="user_due_date" data-provide="datepicker" class="datepicker form-control input-sm">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input type="date" name="user_due_date" class="form-control pull-right" id="reservation">
+            </div>
           </div>
         </div>
         <div class="form-group">

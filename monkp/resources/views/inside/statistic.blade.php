@@ -8,18 +8,18 @@
 @section('content')
   <h1>
     Statistik
-    <small>{{$all ? 'Semua Periode' : 'Periode ' . App\Semester::find($semester_id)->toString()}}</small>
+    <small>{{$all ? 'Semua Periode' : 'Periode ' . App\Semester::find($SemesterId)->toString()}}</small>
   </h1>
   
   <div>
     
     <div>
       <form class="form" url="{{url('stats2/')}}" id="submit_periode">
-        <input type="hidden" value="<?php echo $semester_id;?>" id="_semester_id">
+        <input type="hidden" value="<?php echo $SemesterId?>" id="SemesterId">
           <select id="semester_dropdown" name="semester" class="form-control input-sm" onchange="submit()">
             <option value="0" selected>-- Pilih semester --</option>
             @foreach(App\Semester::orderBy('year')->orderBy('odd','desc')->get() as $semester)
-              <option id="semester_{{$semester->id}}" value="{{$semester->id}}">{{$semester->toString()}}</option>
+              <option id="semester_{{$SemesterId}}" value="{{$SemesterId}}">{{$semester->toString()}}</option>
             @endforeach
             @if(isset ($aktif_tab))
               <input type="hidden" value="{{$aktif_tab}}" id="_tab_aktif" name="tab">

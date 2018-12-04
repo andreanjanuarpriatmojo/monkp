@@ -3,7 +3,7 @@
 @section('content')
   <h1>
     Tabel
-    <small>{{$all ? 'Semua Periode' : 'Periode ' . App\Semester::find($semester_id)->toString()}}</small>
+    <small>{{$all ? 'Semua Periode' : 'Periode ' . App\Semester::find($SemesterId)->toString()}}</small>
   </h1>
   <form class="form-inline">
     <select name="semester" class="form-control input-sm" onchange="$(this).parent().submit()">
@@ -21,7 +21,7 @@
     </div>
   @else
     <p class="">
-      <a href="{{url('table/export') . ($all ? '' : '/' . $semester_id)}}" class="btn btn-success" target="_blank">
+      <a href="{{url('table/export') . ($all ? '' : '/' . $SemesterId)}}" class="btn btn-success" target="_blank">
         Export to Excel
       </a>
     </p>
@@ -75,6 +75,6 @@
         </table>
       </div>
     </div>
-    {!!$members->appends(['semester' => $semester_id])->render()!!}
+    {!!$members->appends(['semester' => $SemesterId])->render()!!}
   @endif
 @endsection

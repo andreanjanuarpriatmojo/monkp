@@ -53,7 +53,7 @@ return [
     */
 
     //'url' => env('APP_URL', 'http://localhost'),
-	'url' => 'http://monkp.if.its.ac.id',
+	'url' => 'http://localhost:8000',
 
     /*
     |--------------------------------------------------------------------------

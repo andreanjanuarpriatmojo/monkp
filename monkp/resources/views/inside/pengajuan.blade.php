@@ -86,13 +86,25 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label>Tanggal Mulai</label>
-                <input type="date" data-provide="datepicker" class="datepicker form-control" name="group[start_date]" value="{{old('group.start_date')}}" required>
+                <!-- <input type="date" data-provide="datepicker" class="datepicker form-control" name="group[start_date]" value="{{old('group.start_date')}}" required> -->
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="date" name="group[start_date]" class="form-control pull-right" id="reservation" value="{{old('group.start_date')}}" required>
+                </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label>Tanggal Selesai</label>
-                <input type="date" data-provide="datepicker" class="datepicker form-control" name="group[end_date]" value="{{old('group.end_date')}}" required>
+                <!-- <input type="date" data-provide="datepicker" class="datepicker form-control" name="group[end_date]" value="{{old('group.end_date')}}" required> -->
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="date" name="group[end_date]" class="form-control pull-right" id="reservation" value="{{old('group.end_date')}}" required>
+                </div>
               </div>
             </div>
             <div class="col-md-4">

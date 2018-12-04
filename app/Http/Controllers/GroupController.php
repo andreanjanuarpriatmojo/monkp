@@ -41,6 +41,7 @@ class GroupController extends Controller {
 		if(Auth::user()->role=='LECTURER')
 		{
 			$idlct=Lecturer::where('nip',Auth::user()->username)->first();
+			// dd($idlct);
 			if ($search != null && $search != '' && $stat != null && $stat != 'null') {
 				$groups=Group::where('lecturer_id',$idlct->id)->where('status',$stat)->where(function($q)use($search){
 						$q->whereHas('students',function($q)use($search){
@@ -121,6 +122,7 @@ class GroupController extends Controller {
 		{
 			$groups = new Pagination($groups, $total, $perPage, $page, $option);
 			$error="ada ".$total." kelompok ditemukan";		
+			// dd($groups);
 			$data = compact('groups', 'lecturers', 'stat', 'search', 'semester_id','error');
 			//return $groups;
 			return view('inside.kelompok', $data);		

@@ -118,7 +118,7 @@
                 <span title="{{$status['desc']}}">{{strtoupper($status['name'])}}</span>
               </td>
               <td>
-                {{$group->students->get(0)->name}}
+                {{$group->students->get(0)['name']}}
                 @if (sizeof($group->students) > 1)
                   -  {{$group->students->get(1)->name}}
                 @endif
@@ -137,7 +137,7 @@
                         <div class="form-group">
                           <label class="col-md-4 control-label">Mahasiswa</label>
                           <div class="col-md-8 control-text">
-                            {{$group->students->get(0)->nrp}} {{$group->students->get(0)->name}}
+                            {{$group->students->get(0)['nrp']}} {{$group->students->get(0)['name']}}
                             @for ($i = 1; $i < $group->students->count(); $i++)
                               <br>{{$group->students->get($i)->nrp}} {{$group->students->get($i)->name}}
                             @endfor
@@ -202,16 +202,16 @@
                         </div>
                         @if($role=='ADMIN')
                           <div class="form-group">
-                            <label class="col-md-4 control-label">No HP {{$group->students->get(0)->name}}</label>
+                            <label class="col-md-4 control-label">No HP {{$group->students->get(0)['name']}}</label>
                             <div class="col-md-8 control-text">
-                              {{App\User::where('username',$group->students->get(0)->nrp)->first()->nohp==null ?'-':App\User::where('username',$group->students->get(0)->nrp)->first()->nohp}}
+                              {{App\User::where('username',$group->students->get(0)['nrp'])->first()['nohp']==null ?'-':App\User::where('username',$group->students->get(0)->nrp)->first()->nohp}}
                             </div>
                           </div>
                           @if (sizeof($group->students) > 1)
                             <div class="form-group">
-                              <label class="col-md-4 control-label">No HP {{$group->students->get(1)->name}}</label>
+                              <label class="col-md-4 control-label">No HP {{$group->students->get(1)['name']}}</label>
                               <div class="col-md-8 control-text">
-                                {{App\User::where('username',$group->students->get(1)->nrp)->first()->nohp==null ?'-':App\User::where('username',$group->students->get(1)->nrp)->first()->nohp}}
+                                {{App\User::where('username',$group->students->get(1)['nrp'])->first()->nohp==null ?'-':App\User::where('username',$group->students->get(1)->nrp)->first()->nohp}}
                               </div>
                             </div>
                           @endif

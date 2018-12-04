@@ -88,7 +88,7 @@ class PengajuanController extends Controller {
 		$group = new Group($greq);
 		$group->corporation()->associate($corp);
 		$group->status=0;
-		$group->comment='';
+		// $group->comment='';
 		$group->lecturer_id=0;
 		$group->semester()->associate(Semester::current());
 		$group->save();

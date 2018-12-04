@@ -11,8 +11,8 @@ class Lecturer extends Model {
 		return ucwords(strtolower($name));
 	}
 
-	public function scopeDosen($q) {
-		return $q->whereNotIn('nip', ['0', '1']);
+	public function scopeDosen($nip) {
+		return $nip->whereNotIn('nip', ['0', '1']);
 	}
 
 	public function user() {
@@ -23,7 +23,7 @@ class Lecturer extends Model {
 		return $this->hasMany('App\Group');
 	}
 
-	public function groups_by_period($period){
+	public function GroupByPeriod($period){
 //		return $this->hasMany('App\Group')->where("semester_id",$period)->where("status");
 		return $this->hasMany('App\Group')->where("semester_id",$period);
 	}

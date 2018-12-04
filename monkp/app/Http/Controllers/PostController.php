@@ -29,18 +29,18 @@ class PostController extends Controller {
 	 */
 	public function store(Request $request)
 	{
-		$br = $request->only(['title', 'post']);
-		if ($br['title'] == "" || $br['post'] == "") {
+		$baru = $request->only(['title', 'post']);
+		if ($baru['title'] == "" || $baru['post'] == "") {
 			return redirect('berita')
 				->with('alert', ['alert' => 'warning', 'body' => 'Gagal membuat berita.']);
 		}
-		$post = Post::create($br);
+		$post = Post::create($baru);
 
 		$uploadedFile = $request->file('file');
 		if ($uploadedFile != null) {
 			$ext = $uploadedFile->getClientOriginalExtension();
-			$saved_name = time() . '.' . $ext;
-			$uploadedFile->move(storage_path() . '/upload', $saved_name);
+			$SavedName = time() . '.' . $ext;
+			$uploadedFile->move(storage_path() . '/upload', $SavedName);
 
 			// we should save this file information in database
 			$name = $uploadedFile->getClientOriginalName();
@@ -73,13 +73,13 @@ class PostController extends Controller {
 				->with('alert', ['alert' => 'warning', 'body' => 'Gagal mengubah berita.']);
 		}
 
-		$br = $request->only(['title', 'post']);
-		if ($br['title'] == "" || $br['post'] == "") {
+		$baru = $request->only(['title', 'post']);
+		if ($baru['title'] == "" || $baru['post'] == "") {
 			return redirect('berita')
 				->with('alert', ['alert' => 'warning', 'body' => 'Gagal mengubah berita.']);
 		}
 
-		$post->fill($br);
+		$post->fill($baru);
 		$post->save();
 		return redirect('berita')
 			->with('alert', ['alert' => 'info', 'body' => 'Berhasil mengubah berita.']);
@@ -88,11 +88,11 @@ class PostController extends Controller {
 	/**
 	 * Remove the post from storage.
 	 *
-	 * @param  int  $id
+	 * @param  int  $PostId
 	 * @return Response
 	 */
-	public function destroy($id) {
-		$post = Post::find($id);
+	public function destroy($PostId) {
+		$post = Post::find($PostId);
 
 		if ($post->file != null) {
 			$post->file->delete();
@@ -103,9 +103,9 @@ class PostController extends Controller {
 		return redirect('berita')
 			->with('alert', ['alert' => 'info', 'body' => 'Berhasil menghapus berita.']);
 	}
-	public function download($id)
+	public function download($PostId)
 	{
-        $pth="upload\\".$id;
+        $pth="upload\\".$PostId;
         $path = storage_path($pth);
         if(file_exists($path))
         {
@@ -116,9 +116,9 @@ class PostController extends Controller {
         	return redirect('/home');
         }
 	}
-	public function getpost($id)
+	public function getpost($PostId)
 	{
-		return Post::find($id)->toJson();
+		return Post::find($PostId)->toJson();
 	}
 	protected function alert($alert, $body) {
 		return json_encode(compact('alert', 'body'));

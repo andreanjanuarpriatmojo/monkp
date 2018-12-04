@@ -62,23 +62,23 @@ class AdminController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function stats(Request $request, $semester_id = null) {
+	public function stats(Request $request, $SemesterId = null) {
 		$all = true;
-		$semester_id = $request->input('semester');
+		$SemesterId = $request->input('semester');
 		$tab = $request->input('tab');
-		if(Semester::find($semester_id) != null) {
+		if(Semester::find($SemesterId) != null) {
 			$all = false;
-			$groups = Group::where('semester_id',$semester_id)->with('members')->get();
+			$groups = Group::where('semester_id',$SemesterId)->with('members')->get();
 			$lects=Lecturer::where('nip','!=',0)->where('nip','!=',1)->orderBy('initial')->get();
 			$corps=Corporation::whereHas('groups',function($q)use($semester_id){
-				$q->where('semester_id', $semester_id);
+				$q->where('semester_id', $SemesterId);
 			})->get();
-			$gr = Group::where('lecturer_id','!=',0)->where('semester_id',$semester_id)->orderBy('lecturer_id')->get();
+			$group = Group::where('lecturer_id','!=',0)->where('semester_id',$SemesterId)->orderBy('lecturer_id')->get();
 			$jmlpeserta=array();
 			foreach ($lects as $x) {
 				$jmlpeserta[$x->id]=0;
 			}
-			foreach ($gr as $x) {
+			foreach ($group as $x) {
 				foreach ($x->students as $member) {
 					$jmlpeserta[$x->lecturer_id]=$jmlpeserta[$x->lecturer_id]+1;
 				}
@@ -91,12 +91,12 @@ class AdminController extends Controller {
 			$groups = Group::with('members')->get();
 			$corps=Corporation::get();
 			$lects=Lecturer::where('nip','!=',0)->where('nip','!=',1)->orderBy('initial')->get();
-			$gr = Group::where('lecturer_id','!=',0)->orderBy('lecturer_id')->get();
+			$group = Group::where('lecturer_id','!=',0)->orderBy('lecturer_id')->get();
 			$jmlpeserta=array();
 			foreach ($lects as $x) {
 				$jmlpeserta[$x->id]=0;
 			}
-			foreach ($gr as $x) {
+			foreach ($group as $x) {
 				foreach ($x->students as $member) {
 					$jmlpeserta[$x->lecturer_id]=$jmlpeserta[$x->lecturer_id]+1;
 				}
@@ -120,7 +120,7 @@ class AdminController extends Controller {
 						SELECT groups.*
 						FROM groups, members
 						WHERE groups.id = members.group_id
-						$where
+						
 						GROUP BY groups.id
 					) AS groups ON groups.lecturer_id = lecturers.id
 					WHERE nip != 0
@@ -128,11 +128,11 @@ class AdminController extends Controller {
 				ORDER BY lect_count DESC, initial");
 	}
 
-	public function stats2(Request $request, $semester_id = null) {
+	public function stats2(Request $request, $SemesterId = null) {
 		$all = false;
 		if (($req = $request->input('semester')) != null) {
 			return redirect('stats/' . $req);
-		} else if ($semester_id == null || Semester::find($semester_id) == null) {
+		} else if ($SemesterId == null || Semester::find($SemesterId) == null) {
 			$all = true;
 		} else {
 			$all = false;
@@ -141,7 +141,7 @@ class AdminController extends Controller {
 		$where = $all ? '' : "AND groups.semester_id = $semester_id";
 
 		$groups = Group::with('members');
-		$groups = $all ? $groups->get() : $groups->where('semester_id', $semester_id)->get();
+		$groups = $all ? $groups->get() : $groups->where('semester_id', $SemesterId)->get();
 		$lects = Corporation::hydrateRaw(
 				"SELECT * FROM (
 					SELECT lecturers.*, COUNT(groups.id) AS lect_count
@@ -150,7 +150,7 @@ class AdminController extends Controller {
 						SELECT groups.*
 						FROM groups, members
 						WHERE groups.id = members.group_id
-						$where
+						
 						GROUP BY groups.id						
 					) AS groups ON groups.lecturer_id = lecturers.id
 					WHERE nip != 0
@@ -164,7 +164,7 @@ class AdminController extends Controller {
 						SELECT groups.*
 						FROM groups, members
 						WHERE groups.id = members.group_id
-						$where
+						
 						GROUP BY groups.id						
 					) AS groups ON groups.corporation_id = corporations.id
 					GROUP BY 1) as corporations
@@ -181,13 +181,13 @@ class AdminController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function table(Request $request, $semester_id = null) {
+	public function table(Request $request, $SemesterId = null) {
 		$all = false;
 
-		if (($req = $request->input('semester')) != null) {
-			$semester_id=$request->input('semester');
+		if (($request->input('semester')) != null) {
+			$SemesterId=$request->input('semester');
 			$all = false;
-		} else if ($semester_id == null || Semester::find($semester_id) == null) {
+		} else if ($SemesterId == null || Semester::find($SemesterId) == null) {
 			$all = true;
 		} else {
 			$all = false;
@@ -195,7 +195,7 @@ class AdminController extends Controller {
 
 		$members = $all ? Member::get() : Member::whereHas('group',
 			function ($q) use($semester_id) {
-				$q->where('semester_id', $semester_id);
+				$q->where('semester_id', $$SemesterId);
 			}
 		)->get();
 
@@ -214,15 +214,15 @@ class AdminController extends Controller {
 	/**
 	 * Display corporation details from modal.
 	 *
-	 * @param $id corporation_id
+	 * @param $CorpId corporation_id
 	 * @return Response modal view
 	 */
-	public function showCorporation($id) {
+	public function showCorporation($CorpId) {
 		$corp = Corporation::with('groups.students')->find($id);
 		return view('modal.corporation', compact('corp'));
 	}
 
-	public function showCorporation2($id,$smt) {
+	public function showCorporation2($CorpId,$smt) {
 		$corp = Corporation::with('groups.students')->find($id);
 		$group=Group::where('semester_id',$smt)->where('corporation_id',$id)->get();
 		return view('modal.corporation2', compact('corp','group'));
@@ -232,24 +232,24 @@ class AdminController extends Controller {
 	 *
 	 * @return File .xls
 	 */
-	public function export($semester_id = null) {
+	public function export($SemesterId = null) {
 
 		$all = false;
-		$dt= date("d-M-Y H:i:s", strtotime('+5 hours'));
-		if ($semester_id == null) {
-			$dt=$dt." ALL Periode";
+		$date= date("d-M-Y H:i:s", strtotime('+5 hours'));
+		if ($SemesterId == null) {
+			$date=$date." ALL Periode";
 			$all = true;
-		} else if (Semester::find($semester_id) != null) {
-			$dt=$dt." Periode ".Semester::find($semester_id)->toString();
+		} else if (Semester::find($SemesterId) != null) {
+			$date=$date." Periode ".Semester::find($SemesterId)->toString();
 			$all = false;
 		}
 		$membera = $all ? Member::get() : Member::whereHas('group',
 			function ($q) use($semester_id) {
-				$q->where('semester_id', $semester_id);
+				$q->where('semester_id', $SemesterId);
 			}
 		)->get();
 
-		$excel = Excel::create($dt);
+		$excel = Excel::create($date);
 		$excel->setTitle('Export List Kelompok KP')
 			  ->setCreator('Teknik Informatika')
 			  ->setCompany('Teknik Informatika');

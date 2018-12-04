@@ -9,10 +9,10 @@ class File extends Model {
 	public $timestamps = false;
 	protected $guarded = [];
 	protected $appends = ['path'];
-	protected $download_path = 'storage/upload/';
+	protected $DownloadPath = 'storage/upload/';
 
 	public function getPathAttribute() {
-		return $this->download_path . $this->saved_name;
+		return $this->DownloadPath . $this->saved_name;
 	}
 
 	public function delete()

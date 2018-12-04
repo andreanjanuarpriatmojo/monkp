@@ -60,8 +60,8 @@ class PengajuanController extends Controller {
 		# check if student 1 has created group in the same semester
 		$now = Semester::current();
 		$student = Auth::user()->personable;
-		$student_groups = $student->groups->where('semester_id', $now->id);
-		foreach ($student_groups as $group) {
+		$StudentGroups = $student->groups->where('semester_id', $now->id);
+		foreach ($StudentGroups as $group) {
 			if ($group->status['status'] >= 0 && $group->status['status'] < 3) {
 				return redirect()->back()->with('you', true);
 			}
@@ -116,7 +116,7 @@ class PengajuanController extends Controller {
 		return redirect('home');
 	}
 
-	public function accept($id)
+	public function accept($GroupId)
 	{
 		$groupreq = Friend::find($id);
 		if ($groupreq != null) {
@@ -128,8 +128,8 @@ class PengajuanController extends Controller {
 
 			# check if alredy join group
 			$now = Semester::current();
-			$student_groups = $student->groups->where('semester_id', $now->id);
-			foreach ($student_groups as $group) {
+			$StudentGroups = $student->groups->where('semester_id', $now->id);
+			foreach ($StudentGroups as $group) {
 				if ($group->status['status'] >= 0) {
 					$groupreq->status = 2;
 					$groupreq->save();
@@ -142,7 +142,7 @@ class PengajuanController extends Controller {
 		return redirect()->back();
 	}
 
-	public function comnt($id)
+	public function comnt($GroupId)
 	{
 		$ntf=Notif::find($id);
 		if($ntf!=null)
@@ -153,7 +153,7 @@ class PengajuanController extends Controller {
 		return redirect()->back();
 	}
 
-	public function reject($id)
+	public function reject($GroupId)
 	{
 		$groupreq = Friend::find($id);
 		if ($groupreq != null) {
@@ -188,19 +188,19 @@ class PengajuanController extends Controller {
 		{
 			$input = $request->image;
 			//$new_photo_name = $request->image->getClientOriginalExtension();
-			$extension = $input->getClientOriginalExtension();
-			$new_photo_name = $input->getClientOriginalName();
-			$id=$request->id;
-			$new_photo_name = $id;
+			//$extension = $input->getClientOriginalExtension();
+			$NewPhotoName = $input->getClientOriginalName();
+			$PhotoId=$request->id;
+			$NewPhotoName = $PhotoId;
 		
-			if (file_exists(public_path('surat_keterangan/'.$new_photo_name)))
+			if (file_exists(public_path('surat_keterangan/'.$NewPhotoName)))
 			{
 				$error="File Exist";
 			// get current time and append the upload file extension to it,
 			// then put that name to $photoName variable
 	        }
 	        
-			$photoName = $new_photo_name.'.'.$ext;
+			$photoName = $NewPhotoName.'.'.$ext;
 			//$photoName = $new_photo_name;
 			
 			//talk the select file and move it public directory and make avatars
@@ -209,7 +209,7 @@ class PengajuanController extends Controller {
 			$input->move(public_path('surat_keterangan'), $photoName);
 			if (file_exists(public_path('surat_keterangan/'.$photoName)))
 			{
-				$group=Group::find($id);
+				$group=Group::find($PhotoId);
 				$group->status="1";
 				$group->nama_file=$photoName;
 				$group->save();
@@ -218,7 +218,7 @@ class PengajuanController extends Controller {
 			}
 	        else
 	        {
-	        	$group=Group::find($id);
+	        	$group=Group::find($PhotoId);
 				$group->status="0";
 				$group->save();
 	        	$error="File Upload Gagal";
@@ -226,10 +226,10 @@ class PengajuanController extends Controller {
 		}
 		return Response::json(['success' => true,'error'=> $error]); 
     }
-    public function nohp(Request $r)
+    public function nohp(Request $NoHp)
     {
     	$usr=User::find(Auth::user()->id);
-    	$usr->nohp=$r->nohp;
+    	$usr->nohp=$NoHp->nohp;
     	$usr->save();
     	return redirect('/');
     }

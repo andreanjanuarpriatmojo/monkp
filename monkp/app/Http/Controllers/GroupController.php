@@ -41,7 +41,6 @@ class GroupController extends Controller {
 		if(Auth::user()->role=='LECTURER')
 		{
 			$idlct=Lecturer::where('nip',Auth::user()->username)->first();
-			// dd($idlct);
 			if ($search != null && $search != '' && $stat != null && $stat != 'null') {
 				$groups=Group::where('lecturer_id',$idlct->id)->where('status',$stat)->where(function($q)use($search){
 						$q->whereHas('students',function($q)use($search){
@@ -102,12 +101,12 @@ class GroupController extends Controller {
 			$groups=$groups->get();
 		}
 
-		$semester_id = $request->input('semester');
-		if ($semester_id != null && $semester_id != 'null') {
-			if (Semester::find($semester_id) != null) {
-				$groups = $groups->where('semester_id', intval($semester_id));
+		$SemesterId = $request->input('semester');
+		if ($SemesterId != null && $SemesterId != 'null') {
+			if (Semester::find($SemesterId) != null) {
+				$groups = $groups->where('semester_id', intval($SemesterId));
 			} else {
-				$semester_id = null;
+				$SemesterId = null;
 			}
 		}
 		$lecturers = Lecturer::dosen()->get()->sortBy('initial');
@@ -122,7 +121,6 @@ class GroupController extends Controller {
 		{
 			$groups = new Pagination($groups, $total, $perPage, $page, $option);
 			$error="ada ".$total." kelompok ditemukan";		
-			// dd($groups);
 			$data = compact('groups', 'lecturers', 'stat', 'search', 'semester_id','error');
 			//return $groups;
 			return view('inside.kelompok', $data);		
@@ -137,20 +135,20 @@ class GroupController extends Controller {
 	/**
 	 * Get group by given group_id with grade.
 	 *
-	 * @param  int  $id
+	 * @param  int  $GroupId
 	 * @return string
 	 */
-	public function getGroupWithGrade($id) {
+	public function getGroupWithGrade($GroupId) {
 		$with = ['members.grade', 'members.student'];
-		return Group::with($with)->find($id)->toJson();
+		return Group::with($with)->find($GroupId)->toJson();
 	}
-	public function getGroupWithlog($id) { //log masih error
+	public function getGroupWithlog($GroupId) { //log masih error
 		return DB::table('logs')
             ->join('members', 'logs.member_id', '=', 'members.id')
             ->join('students', 'student_id', '=', 'students.id')
             ->join('lecturers', 'editor_id', '=', 'nip')
             ->select('logs.id', 'nrp', 'students.name as student_name', 'lecturer_grade', 'mentor_grade', 'discipline_grade','report_status', 'lecturers.name', 'logs.updated_at')
- 	    ->where('members.group_id', '=', $id) ->orderBy('logs.updated_at', 'desc')->get();
+ 	    ->where('members.group_id', '=', $GroupId) ->orderBy('logs.updated_at', 'desc')->get();
 
 	}
 	
@@ -160,25 +158,25 @@ class GroupController extends Controller {
 	 * @param  int  $id
 	 * @return string
 	 */
-	public function cobaa()
-	{
-		$id=394;
-		$group=Group::find($id);
-		$rstat=2;
-		$rlect=52;
-		$dosen=Lecturer::find($rlect);
-		foreach($group->members as $member) {
-				//echo $member;
+	// public function cobaa()
+	// {
+	// 	$GroupId=394;
+	// 	$group=Group::find($GroupId);
+	// 	$rstat=2;
+	// 	$rlect=52;
+	// 	$dosen=Lecturer::find($rlect);
+	// 	foreach($group->members as $member) {
+	// 			//echo $member;
 
-				//$member->grade()->save(new Grade);
-		}
+	// 			//$member->grade()->save(new Grade);
+	// 	}
 
-		//return $dosen;
-	}
-	public function update(Request $request, $id)
+	// 	//return $dosen;
+	// }
+	public function update(Request $request, $GroupId)
 	{
 		
-		$group = Group::find($id);
+		$group = Group::find($GroupId);
 		if ($group == null) {
 			return $this->alert('danger', 'ID kelompok tidak terdaftar.');
 		}
@@ -238,7 +236,7 @@ class GroupController extends Controller {
 	public function updateGrade(Request $request) {
 
 		foreach ($request->input('input') as $input) {
-			$member_id = $input['id'];
+			$MemberId = $input['id'];
 			$lecturer_grade = (int)$input['lecturer_grade'];
 			$lecturer_grade = $lecturer_grade < 0 ? 0 : (
 				$lecturer_grade > 100 ? 100 : $lecturer_grade
@@ -289,17 +287,17 @@ class GroupController extends Controller {
 	/**
 	 * Update the mentor via json.
 	 *
-	 * @param  int  $id
+	 * @param  int  $GroupId
 	 * @return string
 	 */
-	public function updateMentor(Request $request, $id) {
-		$group = Group::find($id);
+	public function updateMentor(Request $request, $GroupId) {
+		$group = Group::find($GroupId);
 		if ($group == null) {
 			return $this->alert('danger', 'ID kelompok tidak terdaftar.');
 		}
 		if ($group->mentor == null) {
 			$mentor = new Mentor;
-			$mentor->group_id = $id;
+			$mentor->group_id = $GroupId;
 			$mentor->name = $request->input('mentor');
 			$mentor->save();
 		} else {
@@ -312,13 +310,13 @@ class GroupController extends Controller {
 	/**
 	 * Remove the group and related resource.
 	 *
-	 * @param  int  $id of Group
+	 * @param  int  $GroupId of Group
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy($GroupId)
 	{
 		$cek=0;
-		$group = Group::find($id);
+		$group = Group::find($GroupId);
 		if(Auth::user()->role=='ADMIN'||Auth::user()->personable->nip=='198407082010122004')
 		{
 			$cek=1;
@@ -349,9 +347,9 @@ class GroupController extends Controller {
 		return redirect('/home');
 	}
 
-	public function comment(Request $request,$id)
+	public function comment(Request $request,$GroupId)
 	{
-		$group = Group::find($id);
+		$group = Group::find($GroupId);
 		if ($group == null) {
 			return $this->alert('danger', 'ID kelompok tidak terdaftar.');
 		}

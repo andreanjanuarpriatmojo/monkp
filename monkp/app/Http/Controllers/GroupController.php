@@ -121,13 +121,13 @@ class GroupController extends Controller {
 		{
 			$groups = new Pagination($groups, $total, $perPage, $page, $option);
 			$error="ada ".$total." kelompok ditemukan";		
-			$data = compact('groups', 'lecturers', 'stat', 'search', 'semester_id','error');
+			$data = compact('groups', 'lecturers', 'stat', 'search', 'SemesterId','error');
 			//return $groups;
 			return view('inside.kelompok', $data);		
 		}
 		$error="tidak ada kelompok ditemukan";
 		//$groups = new Pagination($groups, $total, $perPage, $page, $option);
-		$data = compact('groups', 'lecturers', 'stat', 'search', 'semester_id');
+		$data = compact('groups', 'lecturers', 'stat', 'search', 'SemesterId');
 		//return Auth::user()->notif;
 		return view('inside.kelompok', $data);
 	}

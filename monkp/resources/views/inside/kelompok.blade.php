@@ -291,7 +291,7 @@
               </tr>
               @endforeach
           </table>
-          {!!$groups->appends(['status' => $stat, 'search' => $search, 'semester' => $semester_id])->render()!!}
+          {!!$groups->appends(['status' => $stat, 'search' => $search, 'semester' => $SemesterId])->render()!!}
       @endif
     </div>
     @if ($groups->count()!=0)

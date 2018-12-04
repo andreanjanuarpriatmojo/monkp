@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model {
 
-	protected $fillable = ['status', 'start_date', 'end_date'];
+	protected $fillable = ['status', 'start_date', 'end_date', 'semester_id'];
 	protected static $StatusCollection = [
 		['status' =>  0, 'name' => 'created', 'desc' => 'Pengajuan kelompok KP baru saja dibuat', 'changeto' => [1, -1]],
 		['status' => -1, 'name' => 'denied', 'desc' => 'Pengajuan kelompok KP ditolak oleh Koor KP', 'changeto' => []],

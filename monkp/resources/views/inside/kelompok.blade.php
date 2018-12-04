@@ -173,7 +173,7 @@
                                 <option value="-">-- PILIH DOSEN PEMBIMBING --</option>
                                 @foreach ($lecturers as $l)
                                   <option value="{{$l->id}}">
-                                    {{$l->initial}} - {{$l->name}} ({{$l->groups_by_period($group->semester->id)->count()}})
+                                    {{$l->initial}} - {{$l->name}} ({{$l->GroupByPeriod($group->semester->id)->count()}})
                                   </option>
                                 @endforeach
                               </select>

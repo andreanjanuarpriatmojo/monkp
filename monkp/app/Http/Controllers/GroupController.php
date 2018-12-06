@@ -236,7 +236,7 @@ class GroupController extends Controller {
 	public function updateGrade(Request $request) {
 
 		foreach ($request->input('input') as $input) {
-			$MemberId = $input['id'];
+			$member_id = $input['id'];
 			$lecturer_grade = (int)$input['lecturer_grade'];
 			$lecturer_grade = $lecturer_grade < 0 ? 0 : (
 				$lecturer_grade > 100 ? 100 : $lecturer_grade

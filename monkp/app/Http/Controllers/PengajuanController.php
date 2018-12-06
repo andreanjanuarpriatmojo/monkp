@@ -12,6 +12,7 @@ use Input;
 use App\User;
 use Response;
 use Validator;
+use App\Lecturer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 class PengajuanController extends Controller {
@@ -25,7 +26,8 @@ class PengajuanController extends Controller {
 	{
 		$corps = Corporation::orderBy('name', 'desc')->get()->toJson();
 		$students = Student::where('id', '!=', Auth::user()->personable_id)->orderBy('name', 'asc')->get();
-		$data = compact('students', 'corps');
+		$lects=Lecturer::where('nip','!=',0)->where('nip','!=',1)->orderBy('initial')->get();
+		$data = compact('lects', 'students', 'corps');
 		return view('inside.pengajuan', $data);
 	}
 
@@ -88,8 +90,8 @@ class PengajuanController extends Controller {
 		$group = new Group($greq);
 		$group->corporation()->associate($corp);
 		$group->status=0;
-		// $group->comment='';
-		$group->lecturer_id=0;
+		$group->comment='';
+		$group->lecturer_id=$request['lecturer'];
 		$group->semester()->associate(Semester::current());
 		$group->save();
 

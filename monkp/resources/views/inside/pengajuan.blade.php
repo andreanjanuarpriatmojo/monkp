@@ -119,6 +119,25 @@
               </div>
             </div>
           </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Dosen Pembimbing</label>
+                <select class="form-control" name="lecturer">
+                  <option value="0">-</option>
+                    @foreach ($lects as $l)
+                      <!-- <option value="{{$student->id}}">{{$student->name}}</option> -->
+                      <option value="{{$l->id}}">
+                        {{$l->initial}} - {{$l->name}}
+                      </option>
+                    @endforeach
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4"></div>
+          </div>
         </div>
         <div class="panel-footer text-right">
           <button class="btn btn-success">Submit</button>

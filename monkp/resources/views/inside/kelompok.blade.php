@@ -267,7 +267,7 @@
                   </div>
                   <div class="col-md-offset-7">
                     <div class="row">
-                      <div class="col-md-10 text-right">
+                      <div class="col-md-12 text-right">
                         <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#clps{{$group->id}}" class="accordion-toggle">Close</button>
                         @if ($role == 'ADMIN')
                           <button type="button" class="btn btn-primary" onclick="save({{$group->id}})">Save</button>
@@ -288,6 +288,9 @@
                           @endif
                           @if ($status['status'] == 0 || $status['status'] == 1)
                             <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#upload">Upload</button>                          
+                          @endif
+                          @if ($status['status'] == 2)
+                            <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#uploadnilai">Upload Nilai</button>                          
                           @endif
                           <!--TAMBAH TOMBOL UPLOAD GAMBAR-->
                         @endif
@@ -475,6 +478,51 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--tambah upload nilai mahasiswa-->
+    <div class="modal fade" id="uploadnilai" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Upload Penilain KP</h4>
+          </div>
+          <div class="modal-body">
+            <p>Upload foto bukti penilaian perusahaan</p>
+              <form>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                    <input type="file" name="buktinilai" class="form-control">
+                  </div>
+                </div>
+                <br>
+                <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>NRP</th>
+                          <th>Nama Mahasiswa</th>
+                          <th>Nilai</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>5115100001</td>
+                          <td>Nama Mahasiswa 1</td>
+                          <td class="col-md-3">
+                            <div class="form-group">
+                                <input type="text" name="nilai" class="form-control">
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+              </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button class="btn btn-warning" id="save-bukti" data-dismiss="modal">Save</button>
           </div>
         </div>
       </div>

@@ -126,14 +126,16 @@
 				<div class="col-md-10"></div>
 				<div class="col-md-2">
 				@if ($role == 'STUDENT')
-					<button class="btn btn-default">Back</button>
+					<!-- <button class="btn btn-default">Back</button> -->
+					<a href="/home" class="btn btn-default">Back</a>
 					@if($grade['mentor_grade'] > 0)
 						<button class="btn btn-success" disabled>Save</button>
 					@else
 						<button type="submit" class="btn btn-success">Save</button>
 					@endif
 				@else
-					<button class="btn btn-default">Back</button>
+					<!-- <button class="btn btn-default">Back</button> -->
+					<a href="/home" class="btn btn-default">Back</a>
 					<button type="submit" class="btn btn-success">Save</button>
 				@endif
 				</div>

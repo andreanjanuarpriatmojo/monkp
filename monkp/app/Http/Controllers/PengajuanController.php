@@ -10,6 +10,7 @@ use App\Notification as Notif;
 use Auth;
 use Input;
 use App\User;
+use App\Progres;
 use Response;
 use Validator;
 use App\Lecturer;
@@ -114,6 +115,12 @@ class PengajuanController extends Controller {
 			$notif->is_read = false;
 			$notif->save();
 		}
+
+		$progres = new Progres;
+		$progres->id = $group->id;
+		$progres->jumlah_progres = 4;
+		$progres->group_id = $group->id;
+		$progres->save();
 
 		return redirect('home');
 	}

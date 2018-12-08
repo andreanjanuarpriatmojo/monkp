@@ -38,45 +38,19 @@ class GroupController extends Controller {
 				return view('home');
 				break;
 		}
-		$stat = $request->input('status');
-		$search = $request->input('search');
-		if(Auth::user()->role=='LECTURER')
-		{
-			$idlct=Lecturer::where('nip',Auth::user()->username)->first();
-			if ($search != null && $search != '' && $stat != null && $stat != 'null') {
-				$groups=Group::where('lecturer_id',$idlct->id)->where('status',$stat)->where(function($q)use($search){
-						$q->whereHas('students',function($q)use($search){
-							$q->where('name','like','%'.$search.'%');
-						})->orwhereHas('corporation',function($q)use($search){
-							$q->where('name','like','%'.$search.'%');
-						})->orwhereHas('students',function($q)use($search){
-							$q->where('nrp','like','%'.$search.'%');
-						});
-					});
-				$groups=$groups->get();
-			}
-			elseif($search != null && $search != '')
-			{
-				$groups=Group::where('lecturer_id',$idlct->id)->where(function($q)use($search){
-						$q->whereHas('students',function($q)use($search){
-							$q->where('name','like','%'.$search.'%');
-						})->orwhereHas('corporation',function($q)use($search){
-							$q->where('name','like','%'.$search.'%');
-						})->orwhereHas('students',function($q)use($search){
-							$q->where('nrp','like','%'.$search.'%');
-						});
-					});
-				$groups=$groups->get();
-			}
-			elseif ($stat != null && $stat != 'null') {
-				$groups = Group::where('lecturer_id',$idlct->id)->where('status',$stat)->get();
-			}
+		if(Auth::user()->username == '1234567890'){
+			$group = Group::where('status', '>=', '2')->get();
+
+			return view('inside.rbtc', compact('group'));
 		}
-		elseif(Auth::user()->role=='ADMIN'||Auth::user()->role=='TU')
-		{
-			if ($search != null && $search != '' && $stat != null && $stat != 'null') {
-				$groups =$groups=Group::where('status',$stat)
-						->where(function($q)use($search){
+		else{
+			$stat = $request->input('status');
+			$search = $request->input('search');
+			if(Auth::user()->role=='LECTURER')
+			{
+				$idlct=Lecturer::where('nip',Auth::user()->username)->first();
+				if ($search != null && $search != '' && $stat != null && $stat != 'null') {
+					$groups=Group::where('lecturer_id',$idlct->id)->where('status',$stat)->where(function($q)use($search){
 							$q->whereHas('students',function($q)use($search){
 								$q->where('name','like','%'.$search.'%');
 							})->orwhereHas('corporation',function($q)use($search){
@@ -85,53 +59,87 @@ class GroupController extends Controller {
 								$q->where('nrp','like','%'.$search.'%');
 							});
 						});
+					$groups=$groups->get();
+				}
+				elseif($search != null && $search != '')
+				{
+					$groups=Group::where('lecturer_id',$idlct->id)->where(function($q)use($search){
+							$q->whereHas('students',function($q)use($search){
+								$q->where('name','like','%'.$search.'%');
+							})->orwhereHas('corporation',function($q)use($search){
+								$q->where('name','like','%'.$search.'%');
+							})->orwhereHas('students',function($q)use($search){
+								$q->where('nrp','like','%'.$search.'%');
+							});
+						});
+					$groups=$groups->get();
+				}
+				elseif ($stat != null && $stat != 'null') {
+					$groups = Group::where('lecturer_id',$idlct->id)->where('status',$stat)->get();
+				}
 			}
-			else if($search != null && $search != '')
+			elseif(Auth::user()->role=='ADMIN'||Auth::user()->role=='TU')
 			{
-				$groups =
-					Group::whereHas('corporation', function($q) use ($search) {
-						$q->where('name', 'like', '%'.$search.'%');
-					})->orWhereHas('students', function($q) use ($search) {
-						$q->where('name', 'like', '%'.$search.'%');
-					})->orWhereHas('students', function($q) use ($search) {
-						$q->where('nrp', 'like', '%'.$search.'%');
-					});
+				if ($search != null && $search != '' && $stat != null && $stat != 'null') {
+					$groups =$groups=Group::where('status',$stat)
+							->where(function($q)use($search){
+								$q->whereHas('students',function($q)use($search){
+									$q->where('name','like','%'.$search.'%');
+								})->orwhereHas('corporation',function($q)use($search){
+									$q->where('name','like','%'.$search.'%');
+								})->orwhereHas('students',function($q)use($search){
+									$q->where('nrp','like','%'.$search.'%');
+								});
+							});
+				}
+				else if($search != null && $search != '')
+				{
+					$groups =
+						Group::whereHas('corporation', function($q) use ($search) {
+							$q->where('name', 'like', '%'.$search.'%');
+						})->orWhereHas('students', function($q) use ($search) {
+							$q->where('name', 'like', '%'.$search.'%');
+						})->orWhereHas('students', function($q) use ($search) {
+							$q->where('nrp', 'like', '%'.$search.'%');
+						});
+				}
+				else if ($stat != null && $stat != 'null') {
+					$groups = $groups->where('status', $stat);
+				}
+				$groups=$groups->get();
 			}
-			else if ($stat != null && $stat != 'null') {
-				$groups = $groups->where('status', $stat);
+
+			$SemesterId = $request->input('semester');
+			if ($SemesterId != null && $SemesterId != 'null') {
+				if (Semester::find($SemesterId) != null) {
+					$groups = $groups->where('semester_id', intval($SemesterId));
+				} else {
+					$SemesterId = null;
+				}
 			}
-			$groups=$groups->get();
-		}
+			$lecturers = Lecturer::dosen()->get()->sortBy('initial');
 
-		$SemesterId = $request->input('semester');
-		if ($SemesterId != null && $SemesterId != 'null') {
-			if (Semester::find($SemesterId) != null) {
-				$groups = $groups->where('semester_id', intval($SemesterId));
-			} else {
-				$SemesterId = null;
+			$total = $groups->count();
+			$perPage = 10;
+			$page = $request->input('page');
+			$page == null ? 1 : $page;
+			$option = ['path' => url('home')];
+
+			if($groups->count()!=0)
+			{
+				$groups = new Pagination($groups, $total, $perPage, $page, $option);
+				$error="ada ".$total." kelompok ditemukan";		
+				$data = compact('groups', 'lecturers', 'stat', 'search', 'SemesterId','error');
+				//return $groups;
+				return view('inside.kelompok', $data);		
 			}
+			$error="tidak ada kelompok ditemukan";
+			//$groups = new Pagination($groups, $total, $perPage, $page, $option);
+			$data = compact('groups', 'lecturers', 'stat', 'search', 'SemesterId');
+			//return Auth::user()->notif;
+			return view('inside.kelompok', $data);
 		}
-		$lecturers = Lecturer::dosen()->get()->sortBy('initial');
-
-		$total = $groups->count();
-		$perPage = 10;
-		$page = $request->input('page');
-		$page == null ? 1 : $page;
-		$option = ['path' => url('home')];
-
-		if($groups->count()!=0)
-		{
-			$groups = new Pagination($groups, $total, $perPage, $page, $option);
-			$error="ada ".$total." kelompok ditemukan";		
-			$data = compact('groups', 'lecturers', 'stat', 'search', 'SemesterId','error');
-			//return $groups;
-			return view('inside.kelompok', $data);		
-		}
-		$error="tidak ada kelompok ditemukan";
-		//$groups = new Pagination($groups, $total, $perPage, $page, $option);
-		$data = compact('groups', 'lecturers', 'stat', 'search', 'SemesterId');
-		//return Auth::user()->notif;
-		return view('inside.kelompok', $data);
+		
 	}
 
 	/**
@@ -434,6 +442,16 @@ class GroupController extends Controller {
 		$filepath = public_path('bukti_nilai/').$grade->bukti_nilai;
 
 		return Response::download($filepath);
+	}
+
+	public function updateRbtc($id)
+	{
+		$group = Group::where('id', $id)->first();
+
+		$group->status_buku = 1;
+		$group->save();
+
+		return Redirect::back();
 	}
 
 }

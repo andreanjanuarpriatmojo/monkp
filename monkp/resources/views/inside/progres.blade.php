@@ -32,84 +32,58 @@
 @endsection
 @section('content')
   <div class="panel panel-default" style="margin-top: 3em;">
-    <form>
+    <form role="form" method="POST" action="{{url('/progres/'.$id)}}" enctype="multipart/form-data">
+      <input type="hidden" name="_token" value="{{ csrf_token()}}">
       <div class="panel-heading"><h3><b>Progres Kerja Praktek</b></h3></div>
       <div class="panel-body">
       @if ($role == 'STUDENT')
         <p class="text-muted">Upload Laporan Progres KP dalam bentuk pdf</p>
+        <input type="file" name="file_progres" class="form-control col-md-3" required>
         <div class="row">
           <div class="col-md-12">
-            <table class="table table-bordered">
+            <table class="table table-bordered text-center">
+              @foreach($file_progres as $file_progres)
               <thead>
                 <tr>
-                  <th>Progres 1</th>
-                  <th>Progres 2</th>
-                  <th>Progres 3</th>
-                  <th>Progres 4</th>
+                  <th>Progres {{$file_progres->id}}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td class="col-md-3">
-                    <div class="form-group">
-                      <input type="file" name="progres" class="form-control">
-                    </div>
-                  </td>
-                  <td class="col-md-3">
-                    <div class="form-group">
-                      <input type="file" name="progres" class="form-control">
-                    </div>
-                  </td>
-                  <td class="col-md-3">
-                    <div class="form-group">
-                      <input type="file" name="progres" class="form-control">
-                    </div>
-                  </td>
-                  <td class="col-md-3">
-                    <div class="form-group">
-                      <input type="file" name="progres" class="form-control">
-                    </div>
+                  <td class="col-md-2">
+                    <a href="{{url('/download_progres/'.$file_progres->id)}}" class="btn btn-default">Lihat</a>
                   </td>
                 </tr>
               </tbody>
+              @endforeach
             </table>
           </div>
         </div>
       @endif
       @if ($role == 'LECTURER')
-        <p class="text-muted">Masukan Jumlah Progress Mahasiswa :</p>
+        <p class="text-muted">Masukan Jumlah Progres yang Harus dilakukan Mahasiswa :</p>
         <div class="row">
           <div class="col-md-1">
             <div class="form-group">
-              <input type="text" name="" class="form-control">
+              <input type="text" name="" class="form-control" value="{{$progres->jumlah_progres}}">
             </div>
           </div>
           <div class="col-md-12">
             <table class="table table-bordered text-center">
+              @foreach($file_progres as $file_progres)
               <thead>
                 <tr>
-                  <th>Progres 1</th>
-                  <th>Progres 2</th>
-                  <th>Progres 3</th>
-                  <th>Progres 4</th>
+                  <th>Progres {{$file_progres->id}}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td class="col-md-2">
-                    <button class="btn btn-default">Lihat</button>
-                  </td>
-                  <td class="col-md-2">
-                    <button class="btn btn-default">Lihat</button>
-                  </td>
-                  <td class="col-md-2">
-                    <button class="btn btn-default">Lihat</button>
-                  </td>
-                  <td class="col-md-2">
-                    <button class="btn btn-default">Lihat</button>
+                    <a href="{{url('/download_progres/'.$file_progres->id)}}" class="btn btn-default">Lihat</a>
                   </td>
                 </tr>
               </tbody>
+              @endforeach
             </table>
           </div>
         </div>

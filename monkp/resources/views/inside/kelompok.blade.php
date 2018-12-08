@@ -254,14 +254,14 @@
                             </div>
                           </div>
                         @endif
-                        @if ($role == 'LECTURER')
+                        <!-- @if ($role == 'LECTURER')
                           <div class="form-group">
                             <div class="col-md-offset-4 col-md-6">
                               <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#nilaiModalDospem">Nilai</a>
-                              <!--a href="#" class="btn btn-warning" onclick="open_log({{$group->id}})" data-toggle="modal" data-target="#logModal">Log Nilai</a-->
+                              a href="#" class="btn btn-warning" onclick="open_log({{$group->id}})" data-toggle="modal" data-target="#logModal">Log Nilai</a
                             </div>
                           </div>
-                        @endif
+                        @endif -->
                       </div>
                     </div>
                   </div>
@@ -290,8 +290,8 @@
                             <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#upload">Upload</button>                          
                           @endif
                           @if ($status['status'] == 2)
-                            <a href="" class="btn btn-default">Laporan Progres</a>
-                            <a href="{{url('/group/nilaiPerusahaan/'.$group->id)}}" class="btn btn-default">Upload Nilai</a>                         
+                            <a href="{{url('/progres/'.$group->id)}}" class="btn btn-default">Laporan Progres</a>
+                            <a href="{{url('/group/nilaiPerusahaan/'.$group->id)}}" class="btn btn-default">Masukkan Nilai</a>                         
                           @endif
                           <!--TAMBAH TOMBOL UPLOAD GAMBAR-->
                         @endif

@@ -19,6 +19,9 @@ Route::get('/coba', function () {
     return view('inside.progres');
 })->name('mahasiswa');
 
+Route::get('/try', function () {
+    return view('inside.rbtc');
+})->name('mahasiswa');
 
 Route::get('/rbtc', function () {
     return view('inside.rbtc');
@@ -34,6 +37,10 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('/group/nilaiPerusahaan/{id}', 'GroupController@mahasiswaUpdateGradeForm');
 	Route::get('/download_bukti_nilai/{id}', 'GroupController@downloadBuktiNilai');
 	Route::post('/group/nilaiPerusahaan/{id}', 'GroupController@mahasiswaUpdateGrade');
+	Route::get('/progres/{id}', 'ProgresController@index');
+	Route::post('/progres/{id}', 'ProgresController@update');
+	Route::get('/setujui_pengumpulan_buku/{id}', 'GroupController@updateRbtc');
+	Route::get('/download_progres/{id}', 'ProgresController@download');
 	Route::group(['middleware' => ['student']], function() {
 		Route::get('/pengajuan', 'PengajuanController@create');
 		Route::post('/pengajuan', 'PengajuanController@store');

@@ -40,8 +40,8 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/pengajuan/mentor/{id}', 'GroupController@updateMentor');
 		Route::get('/pengajuan/comnt/{id}','PengajuanController@comnt');
 		Route::get('/pengajuan/nohp/','PengajuanController@nohp');
-		Route::get('/pengajuan/nilaiPerusahaan/{id}', 'GroupController@mahasiswaUpdateGradeForm');
-		Route::post('/pengajuan/nilaiPerusahaan/{id}', 'GroupController@mahasiswaUpdateGrade');
+		Route::get('/group/nilaiPerusahaan/{id}', 'GroupController@mahasiswaUpdateGradeForm');
+		Route::post('/group/nilaiPerusahaan/{id}', 'GroupController@mahasiswaUpdateGrade');
 	});
 	Route::group(['middleware'=>['admin']],function(){
 		Route::get('/pengajuan/update/{id}', 'GroupController@update');

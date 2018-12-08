@@ -10,6 +10,7 @@ use App\Student;
 use App\User;
 use App\logs; //log
 use Auth;
+use Redirect;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Pagination;
@@ -375,15 +376,21 @@ class GroupController extends Controller {
 		$user = Auth::user()->username;
 		$student = Student::where('nrp', $user)->first();
 		$member = Member::where('student_id', $student->id)->where('group_id', $group->id)->first();
-		// dd($member);
+		// dd($student);
 		$grade = Grade::where('member_id', $member->id)->first();
 
 		$data = compact('group', 'user', 'student', 'member', 'grade');
 		return view('inside.inputnilai', $data);
 	}
 
-	public function mahasiswaUpdateGrade($id) {
-		return ;
+	public function mahasiswaUpdateGrade(Request $request) {
+		
+		$grade = Grade::where('id', $request->grade_id)->first();
+		// dd($request);
+		$grade->mentor_grade = $request->nilai;
+		$grade->save();
+
+		return Redirect::back();
 	}
 
 }

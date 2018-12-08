@@ -290,7 +290,7 @@
                             <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#upload">Upload</button>                          
                           @endif
                           @if ($status['status'] == 2)
-                            <a href="{{url('/pengajuan/nilaiPerusahaan/'.$group->id)}}" class="btn btn-default">Upload Nilai</a>                         
+                            <a href="{{url('/group/nilaiPerusahaan/'.$group->id)}}" class="btn btn-default">Upload Nilai</a>                         
                           @endif
                           <!--TAMBAH TOMBOL UPLOAD GAMBAR-->
                         @endif

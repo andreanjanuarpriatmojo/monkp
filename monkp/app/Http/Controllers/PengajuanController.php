@@ -120,7 +120,7 @@ class PengajuanController extends Controller {
 
 	public function accept($GroupId)
 	{
-		$groupreq = Friend::find($id);
+		$groupreq = Friend::find($GroupId);
 		if ($groupreq != null) {
 			$student = Auth::user()->personable;
 			$groupreq->status = 1;

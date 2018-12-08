@@ -19,6 +19,11 @@ Route::get('/coba', function () {
     return view('inside.inputnilai');
 })->name('mahasiswa');
 
+
+Route::get('/rbtc', function () {
+    return view('inside.rbtc');
+})->name('mahasiswa');
+
 Route::group(['middleware' => ['auth']], function() {
 	Route::get('/home', 'GroupController@index');
 	Route::get('/profile','AuthController@getProfile');

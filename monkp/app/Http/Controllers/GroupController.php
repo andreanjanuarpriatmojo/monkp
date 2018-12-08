@@ -11,6 +11,7 @@ use App\User;
 use App\logs; //log
 use Auth;
 use Redirect;
+use Response;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Pagination;
@@ -426,6 +427,13 @@ class GroupController extends Controller {
 		}
 		
 		return Redirect::back();
+	}
+
+	public function downloadBuktiNilai($id){
+		$grade = Grade::where('member_id', $id)->first();
+		$filepath = public_path('bukti_nilai/').$grade->bukti_nilai;
+
+		return Response::download($filepath);
 	}
 
 }

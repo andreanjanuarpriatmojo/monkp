@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('/post/download/{id}', 'PostController@download');
 	Route::get('/pengajuan/destroy/{id}', 'GroupController@destroy');
 	Route::get('/group/nilaiPerusahaan/{id}', 'GroupController@mahasiswaUpdateGradeForm');
+	Route::get('/download_bukti_nilai/{id}', 'GroupController@downloadBuktiNilai');
 	Route::post('/group/nilaiPerusahaan/{id}', 'GroupController@mahasiswaUpdateGrade');
 	Route::group(['middleware' => ['student']], function() {
 		Route::get('/pengajuan', 'PengajuanController@create');

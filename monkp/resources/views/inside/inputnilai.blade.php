@@ -40,7 +40,7 @@
 			<p>Upload foto bukti penilaian perusahaan</p>
 				<div class="row">
 					<div class="form-group col-md-4">
-						<input type="file" name="bukti_nilai" class="form-control">
+						<input type="file" name="bukti_nilai" class="form-control" required>
 					</div>
 					<div class="col-md-10">
 						<table class="table table-bordered">

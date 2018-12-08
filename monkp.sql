@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2018 at 12:51 PM
+-- Generation Time: Dec 08, 2018 at 03:44 PM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -79,18 +79,20 @@ CREATE TABLE `grades` (
   `discipline_grade` int(11) NOT NULL,
   `report_status` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `tanggal_ujian` date DEFAULT NULL,
+  `masukan` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `grades`
 --
 
-INSERT INTO `grades` (`id`, `member_id`, `lecturer_grade`, `mentor_grade`, `bukti_nilai`, `discipline_grade`, `report_status`, `created_at`, `updated_at`) VALUES
-(1, 4, 100, 100, NULL, 100, 100, '2018-12-05 23:20:02', '2018-12-05 23:20:26'),
-(2, 6, 0, 0, NULL, 0, 0, '2018-12-07 23:49:40', '2018-12-07 23:49:40'),
-(3, 7, 0, 90, '1544269768.JPG', 0, 0, '2018-12-08 03:24:10', '2018-12-08 04:49:28'),
-(4, 8, 0, 0, NULL, 0, 0, '2018-12-08 03:24:10', '2018-12-08 03:24:10');
+INSERT INTO `grades` (`id`, `member_id`, `lecturer_grade`, `mentor_grade`, `bukti_nilai`, `discipline_grade`, `report_status`, `created_at`, `updated_at`, `tanggal_ujian`, `masukan`) VALUES
+(1, 4, 100, 100, NULL, 100, 100, '2018-12-05 23:20:02', '2018-12-05 23:20:26', NULL, NULL),
+(2, 6, 0, 0, NULL, 0, 0, '2018-12-07 23:49:40', '2018-12-07 23:49:40', NULL, NULL),
+(3, 7, 90, 90, '1544269768.JPG', 0, 0, '2018-12-08 03:24:10', '2018-12-08 06:57:57', '2018-12-14', '-------'),
+(4, 8, 90, 0, NULL, 0, 0, '2018-12-08 03:24:10', '2018-12-08 06:57:57', '2018-12-14', '-------');
 
 -- --------------------------------------------------------
 
@@ -421,7 +423,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `personable_id`, `personable_type`, `remember_token`, `created_at`, `updated_at`, `nohp`) VALUES
-(1, 'koorkp', '$2y$10$hzb09Ywpv//YNwiJuDgqVuRAANF4t30dHF8VruRiwAtIFnjRBznmC', 1, 'lecturer', 'Fi9gFx8Omb5Rnf6Uom42BnFJgn32nn8aI32xmtO4fdX8gYvgBl3u6ldBrhWm', '2018-11-30 02:55:40', '2018-11-30 02:55:40', '088123456789'),
+(1, 'koorkp', '$2y$10$hzb09Ywpv//YNwiJuDgqVuRAANF4t30dHF8VruRiwAtIFnjRBznmC', 1, 'lecturer', 'LgUlYuSdDTFtSfdBF0gIhmFoAxE90MqubZEPBLx71ux7Tv5aKV58TYpltDnT', '2018-11-30 02:55:40', '2018-11-30 02:55:40', '088123456789'),
 (2, 'tu', '$2y$10$wATgGZgjsj8dohOG9FD.1.Lim9nlmGWAI2JeoxunA.Vc3F.E/CU5q', 2, 'lecturer', NULL, '2016-03-01 14:08:49', '2016-03-01 14:08:49', NULL),
 (3, '051100003', '$2y$10$OTQu4TpvXb0wyG3WuNlVUuF5Afuj7qsr2y4H63rz84zCCIcAXHVOm', 3, 'lecturer', NULL, '2016-03-01 14:08:49', '2016-03-01 14:08:49', NULL),
 (4, '051100008', '$2y$10$3WXMUCgCIn7y4ublNyEF0OUJiijTMOh7l7Nlo5vSWzDGo01KggZg.', 4, 'lecturer', NULL, '2016-03-01 14:08:49', '2016-03-01 14:08:49', NULL),
@@ -495,7 +497,7 @@ INSERT INTO `users` (`id`, `username`, `password`, `personable_id`, `personable_
 (74, '5115100029', '$2y$10$JiRyIAdN8/z50aV/sUYz1OCIBlLUr8/4M5GIceuM9Wqjcuat21hIa', 6, 'student', '6uxe7dBdhbcztbnhuywNEfNVizXPR30DU3n43nOGNzlJ2tdf9EIjBhOdcI3o', '2018-12-04 07:36:54', '2018-12-04 07:36:54', '1234567890'),
 (75, '5115100002', '$2y$10$nowCi7rSLmYIBnuN.5HWoeCoP/BofCQkGhi5itwIGHUNGd5hJG4z6', 7, 'student', 'SxziTJPsIpOiDhouu8OlY1IvLCOb5yei3TqLAp5WTmTroIhj8LJjiPpMr863', '2018-12-06 04:07:05', '2018-12-06 04:07:05', '081333004764'),
 (76, 'dosen', '$2y$10$JiRyIAdN8/z50aV/sUYz1OCIBlLUr8/4M5GIceuM9Wqjcuat21hIa', 71, 'lecturer', 'zcJAYqSRx7rGTh6roKeaLKLyUlAZCLYce3tsgX9MaTiNS3XzFpTJExgOm0y5', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0123456789'),
-(77, '5115100054', '$2y$10$cPxxnW7.94lNgKby1nypAe7wXri4NJEeARleZ6Z9dtEQGvLVa6GdG', 8, 'student', NULL, '2018-12-08 03:14:20', '2018-12-08 03:14:20', '088123456789'),
+(77, '5115100054', '$2y$10$cPxxnW7.94lNgKby1nypAe7wXri4NJEeARleZ6Z9dtEQGvLVa6GdG', 8, 'student', 'VKmiBq1DUbKu1nWCyj1IIDqDg8Uqn7nL2cxl3uzoBoBHdo3cOorCwYnsVtN7', '2018-12-08 03:14:20', '2018-12-08 03:14:20', '088123456789'),
 (78, '87654321', '$2y$10$CJXtLSMrynJRc070e6hvB.qF1v3KnL4y.IbRQvqf3VVGah6v0sQ42', 73, 'lecturer', NULL, '2018-12-08 03:16:19', '2018-12-08 03:16:19', NULL),
 (79, '5115100701', '$2y$10$.DUQZQcQKiFMnfPB8Oyvue5CClKKJUi0eugyWOJcQ2qt1gwOFqX8i', 9, 'student', 'wWScah91sdUPN1BhnypqwE1UVzNhmlL18BEFUwI8jevQKfjqNJsFyWEAN2cV', '2018-12-08 03:18:02', '2018-12-08 03:20:11', '088123456789');
 

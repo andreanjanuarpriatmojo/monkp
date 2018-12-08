@@ -370,4 +370,20 @@ class GroupController extends Controller {
 		return json_encode(compact('alert', 'body'));
 	}
 
+	public function mahasiswaUpdateGradeForm($GroupId) {
+		$group = Group::where('id', $GroupId)->first();
+		$user = Auth::user()->username;
+		$student = Student::where('nrp', $user)->first();
+		$member = Member::where('student_id', $student->id)->where('group_id', $group->id)->first();
+		// dd($member);
+		$grade = Grade::where('member_id', $member->id)->first();
+
+		$data = compact('group', 'user', 'student', 'member', 'grade');
+		return view('inside.inputnilai', $data);
+	}
+
+	public function mahasiswaUpdateGrade($id) {
+		return ;
+	}
+
 }

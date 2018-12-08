@@ -641,7 +641,7 @@
       @if (sizeof($groups) >= 1)
         @foreach ($groups as $group)
           // kalau status group itu 2, maka tampilkan dropdown dosen.
-          @if ($group->status['status'] != 2)
+          @if ($group->status['status'] != 2 && $group->status['status'] != 0 && $group->status['status'] != 1)
             $("#dosenselect{{$group->id}}").addClass("hidden");
           @else
             $("#dosentext{{$group->id}}").addClass("hidden");

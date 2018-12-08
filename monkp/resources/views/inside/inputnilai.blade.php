@@ -75,7 +75,7 @@
 			<p class="text-muted">Range Nilai antara 0 - 100.</p>
 				<div class="row">
 					<div class="col-md-4">
-						<h4><b>Tempat KP : </b></h4>
+						<h4><b>Tempat KP : {{$group->corporation->name}}</b></h4>
 					</div>
 					<div class="col-md-10">
 						<table class="table table-bordered">
@@ -87,35 +87,40 @@
 		                        </tr>
 		                      </thead>
 							<tbody>
+							@foreach($member as $member)
 		                        <tr>
-		                          <td>5115100001</td>
-		                          <td>Nama Mahasiswa 1</td>
+		                          <td>{{$member->student->nrp}}</td>
+		                          <td>{{$member->student->name}}</td>
 		                          <td class="col-md-1">
 		                            <div class="form-group">
-		                                <input type="text" name="nilai" class="form-control">
+		                            @if($member->grade->lecturer_grade == 0)
+		                                <input type="text" name="nilai[{{$member->id}}]" class="form-control" required>
+		                            @else
+		                            	<input type="text" name="nilai[{{$member->id}}]" class="form-control" value="{{$member->grade->lecturer_grade}}" disabled>
+		                            @endif
 		                            </div>
 		                          </td>
 		                        </tr>
-		                        <tr>
-		                          <td>5115100002</td>
-		                          <td>Nama Mahasiswa 2</td>
-		                          <td class="col-md-1">
-		                            <div class="form-group">
-		                                <input type="text" name="nilai" class="form-control">
-		                            </div>
-		                          </td>
-		                        </tr>
+		                    @endforeach
 		                    </tbody>
 						</table>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group col-md-4">
                         	<h4><b>Tanggal Ujian Tulis</b></h4>
-                        	<input type="date" name="tgl" class="form-control">
+                        	@if($member->grade->lecturer_grade == 0)
+                        		<input type="date" name="tgl" class="form-control" required>
+                            @else
+                        		<input type="date" name="tgl" class="form-control" value="{{$member->grade->tanggal_ujian}}" disabled>
+                            @endif
                       	</div>
                       	<div class="form-group col-md-8">
 	                        <h4><b>Masukan</b></h4>
-	                        <textarea type="textarea" name="masukan" class="form-control"></textarea>
+	                        @if($member->grade->lecturer_grade == 0)
+	                        	<textarea type="textarea" name="masukan" class="form-control" required></textarea>
+                            @else
+	                        	<textarea type="textarea" name="masukan" class="form-control" value="{{$member->grade->masukan}}" disabled></textarea>
+                            @endif
 	                    </div>
 					</div>
 				</div>
@@ -136,7 +141,11 @@
 				@else
 					<!-- <button class="btn btn-default">Back</button> -->
 					<a href="/home" class="btn btn-default">Back</a>
-					<button type="submit" class="btn btn-success">Save</button>
+					@if($member->grade->lecturer_grade > 0)
+						<button class="btn btn-success" disabled>Save</button>
+					@else
+						<button type="submit" class="btn btn-success">Save</button>
+					@endif
 				@endif
 				</div>
 			</div>

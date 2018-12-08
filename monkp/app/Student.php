@@ -4,6 +4,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model {
 
+	protected $table = 'students';
+    protected $primaryKey = 'id';
+
 	public $timestamps = false;
 	protected $morphClass = "student";
 
@@ -13,7 +16,7 @@ class Student extends Model {
 	}
 
 	public function members() {
-		return $this->hasMany('App\Member');
+		return $this->hasMany('App\Member', 'id');
 	}
 
 	public function groups() {

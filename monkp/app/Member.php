@@ -4,8 +4,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Member extends Model {
 
+	protected $table = 'members';
+    protected $primaryKey = 'id';
+
 	public function student() {
-		return $this->belongsTo('App\Student');
+		return $this->belongsTo('App\Student', 'student_id');
 	}
 
 	public function group() {

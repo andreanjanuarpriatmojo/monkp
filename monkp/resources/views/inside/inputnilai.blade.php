@@ -32,7 +32,7 @@
 @endsection
 @section('content')
 	<div class="panel panel-default" style="margin-top: 3em;">
-	<form method="POST" action="{{url('/group/nilaiPerusahaan/'.$group->id)}}">
+	<form role="form" method="POST" action="{{url('/group/nilaiPerusahaan/'.$group->id)}}" enctype="multipart/form-data">
       <input type="hidden" name="_token" value="{{ csrf_token()}}">
 		<div class="panel-heading">Upload Penilain KP</div>
 		<div class="panel-body">
@@ -40,7 +40,7 @@
 			<p>Upload foto bukti penilaian perusahaan</p>
 				<div class="row">
 					<div class="form-group col-md-4">
-						<input type="file" name="buktinilai" class="form-control">
+						<input type="file" name="bukti_nilai" class="form-control">
 					</div>
 					<div class="col-md-10">
 						<table class="table table-bordered">

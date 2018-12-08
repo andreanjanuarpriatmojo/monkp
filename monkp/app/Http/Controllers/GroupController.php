@@ -387,6 +387,20 @@ class GroupController extends Controller {
 		
 		$grade = Grade::where('id', $request->grade_id)->first();
 		// dd($request);
+		$foto = "";
+
+        // dd($request->hasFile('bukti_nilai'));
+        if($request->hasFile('bukti_nilai'))
+        {
+            $destinationPath = "bukti_nilai";
+            $file = $request->bukti_nilai;
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time().".".$extension;
+            $file->move($destinationPath, $fileName);
+            $foto = $fileName;
+            $grade->bukti_nilai = $foto;
+        }
+
 		$grade->mentor_grade = $request->nilai;
 		$grade->save();
 

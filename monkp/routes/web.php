@@ -14,6 +14,11 @@
 Route::get('/', function () {
     return redirect('/home');
 });
+
+Route::get('/coba', function () {
+    return view('inside.inputnilai-mahasiswa');
+})->name('mahasiswa');
+
 Route::group(['middleware' => ['auth']], function() {
 	Route::get('/home', 'GroupController@index');
 	Route::get('/profile','AuthController@getProfile');

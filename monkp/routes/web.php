@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/coba', function () {
-    return view('inside.inputnilai');
+    return view('inside.progres');
 })->name('mahasiswa');
 
 

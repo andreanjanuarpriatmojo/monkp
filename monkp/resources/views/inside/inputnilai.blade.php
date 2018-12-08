@@ -34,7 +34,7 @@
 	<div class="panel panel-default" style="margin-top: 3em;">
 	<form role="form" method="POST" action="{{url('/group/nilaiPerusahaan/'.$group->id)}}" enctype="multipart/form-data">
       <input type="hidden" name="_token" value="{{ csrf_token()}}">
-		<div class="panel-heading">Upload Penilain KP</div>
+		<div class="panel-heading"><h3><b>Upload Penilain KP</b></h3></div>
 		<div class="panel-body">
 		@if ($role == 'STUDENT')
 			<p>Upload foto bukti penilaian perusahaan</p>

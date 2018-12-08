@@ -265,7 +265,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-offset-7">
+                  <div class="col-md-offset-6">
                     <div class="row">
                       <div class="col-md-12 text-right">
                         <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#clps{{$group->id}}" class="accordion-toggle">Close</button>
@@ -290,7 +290,8 @@
                             <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#upload">Upload</button>                          
                           @endif
                           @if ($status['status'] == 2)
-                            <a href="{{url('/group/nilaiPerusahaan/'.$group->id)}}" class="btn btn-default">Upload Nilai</a>
+                            <a href="" class="btn btn-default">Laporan Progres</a>
+                            <a href="{{url('/group/nilaiPerusahaan/'.$group->id)}}" class="btn btn-default">Upload Nilai</a>                         
                           @endif
                           <!--TAMBAH TOMBOL UPLOAD GAMBAR-->
                         @endif

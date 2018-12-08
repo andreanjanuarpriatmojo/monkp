@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2018 at 03:44 PM
+-- Generation Time: Dec 08, 2018 at 07:47 PM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -67,6 +67,28 @@ CREATE TABLE `files` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `file_progres`
+--
+
+CREATE TABLE `file_progres` (
+  `id` int(11) NOT NULL,
+  `nama_file` varchar(500) DEFAULT NULL,
+  `progres_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `file_progres`
+--
+
+INSERT INTO `file_progres` (`id`, `nama_file`, `progres_id`, `created_at`, `updated_at`) VALUES
+(1, '1544288351.JPG', 9, '2018-12-08 09:59:11', '2018-12-08 09:59:11'),
+(6, '1544290133.JPG', 9, '2018-12-08 10:28:53', '2018-12-08 10:28:53');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `grades`
 --
 
@@ -91,8 +113,10 @@ CREATE TABLE `grades` (
 INSERT INTO `grades` (`id`, `member_id`, `lecturer_grade`, `mentor_grade`, `bukti_nilai`, `discipline_grade`, `report_status`, `created_at`, `updated_at`, `tanggal_ujian`, `masukan`) VALUES
 (1, 4, 100, 100, NULL, 100, 100, '2018-12-05 23:20:02', '2018-12-05 23:20:26', NULL, NULL),
 (2, 6, 0, 0, NULL, 0, 0, '2018-12-07 23:49:40', '2018-12-07 23:49:40', NULL, NULL),
-(3, 7, 90, 90, '1544269768.JPG', 0, 0, '2018-12-08 03:24:10', '2018-12-08 06:57:57', '2018-12-14', '-------'),
-(4, 8, 90, 0, NULL, 0, 0, '2018-12-08 03:24:10', '2018-12-08 06:57:57', '2018-12-14', '-------');
+(3, 7, 90, 90, '1544269768.JPG', 100, 100, '2018-12-08 03:24:10', '2018-12-08 07:46:33', '2018-12-14', '-------'),
+(4, 8, 90, 0, NULL, 0, 0, '2018-12-08 03:24:10', '2018-12-08 06:57:57', '2018-12-14', '-------'),
+(5, 10, 0, 0, NULL, 0, 0, '2018-12-08 09:17:09', '2018-12-08 09:17:09', NULL, NULL),
+(6, 11, 0, 0, NULL, 0, 0, '2018-12-08 09:17:09', '2018-12-08 09:17:09', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -110,18 +134,20 @@ CREATE TABLE `groups` (
   `semester_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `comment` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL
+  `comment` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status_buku` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `groups`
 --
 
-INSERT INTO `groups` (`id`, `corporation_id`, `start_date`, `end_date`, `status`, `lecturer_id`, `semester_id`, `created_at`, `updated_at`, `comment`) VALUES
-(5, 1, '2018-12-19', '2018-12-22', 0, 0, 2, '2018-12-04 04:14:48', '2018-12-04 04:14:48', NULL),
-(6, 1, '2018-12-04', '2018-12-31', 2, 23, 2, '2018-12-04 07:41:08', '2018-12-05 23:20:02', ''),
-(8, 1, '2018-12-01', '2018-12-31', 2, 71, 2, '2018-12-06 04:16:44', '2018-12-07 23:49:40', ''),
-(9, 1, '2018-12-01', '2019-01-01', 2, 73, 2, '2018-12-08 03:18:25', '2018-12-08 03:24:10', '');
+INSERT INTO `groups` (`id`, `corporation_id`, `start_date`, `end_date`, `status`, `lecturer_id`, `semester_id`, `created_at`, `updated_at`, `comment`, `status_buku`) VALUES
+(5, 1, '2018-12-19', '2018-12-22', 1, 0, 2, '2018-12-04 04:14:48', '2018-12-08 07:51:38', '', 0),
+(6, 1, '2018-12-04', '2018-12-31', 2, 23, 2, '2018-12-04 07:41:08', '2018-12-08 11:40:10', '', 1),
+(8, 1, '2018-12-01', '2018-12-31', 2, 71, 2, '2018-12-06 04:16:44', '2018-12-07 23:49:40', '', 0),
+(9, 1, '2018-12-01', '2019-01-01', 2, 73, 2, '2018-12-08 03:18:25', '2018-12-08 03:24:10', '', 0),
+(11, 1, '2018-12-01', '2019-01-05', 2, 73, 2, '2018-12-08 09:14:30', '2018-12-08 09:17:09', '', 0);
 
 -- --------------------------------------------------------
 
@@ -143,7 +169,8 @@ INSERT INTO `group_requests` (`id`, `group_id`, `status`) VALUES
 (3, 5, 0),
 (4, 6, 0),
 (5, 8, 0),
-(6, 9, 1);
+(6, 9, 1),
+(8, 11, 1);
 
 -- --------------------------------------------------------
 
@@ -234,7 +261,8 @@ INSERT INTO `lecturers` (`id`, `nip`, `name`, `full_name`, `initial`) VALUES
 (68, '510100020', 'ARIF WIBISONO', 'ARIF WIBISONO, S.Kom., M.Sc.', 'AO'),
 (70, 'tian', 'TIAN', 'TIAN AJA', 'TA'),
 (71, '12345678', 'Dosen Coba', 'Dosen Coba', 'DC'),
-(73, '87654321', 'Paijo', 'Paijo Paijo', 'PP');
+(73, '87654321', 'Paijo', 'Paijo Paijo', 'PP'),
+(74, '1234567890', 'RBTC', 'RBTC', 'RB');
 
 -- --------------------------------------------------------
 
@@ -259,7 +287,9 @@ INSERT INTO `members` (`id`, `student_id`, `group_id`, `created_at`, `updated_at
 (4, 6, 6, NULL, NULL),
 (6, 7, 8, NULL, NULL),
 (7, 8, 9, NULL, NULL),
-(8, 9, 9, NULL, NULL);
+(8, 9, 9, NULL, NULL),
+(10, 10, 11, NULL, NULL),
+(11, 11, 11, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -335,7 +365,8 @@ INSERT INTO `notifications` (`id`, `user_id`, `notifiable_id`, `notifiable_type`
 (2, 72, 3, 'group request', 0, '2018-12-04 04:14:48', '2018-12-04 04:14:48'),
 (3, 72, 4, 'group request', 0, '2018-12-04 07:41:09', '2018-12-04 07:41:09'),
 (4, 72, 5, 'group request', 0, '2018-12-06 04:16:44', '2018-12-06 04:16:44'),
-(5, 79, 6, 'group request', 1, '2018-12-08 03:18:25', '2018-12-08 03:20:04');
+(5, 79, 6, 'group request', 1, '2018-12-08 03:18:25', '2018-12-08 03:20:04'),
+(7, 81, 8, 'group request', 1, '2018-12-08 09:14:30', '2018-12-08 09:14:54');
 
 -- --------------------------------------------------------
 
@@ -350,6 +381,28 @@ CREATE TABLE `posts` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `progres`
+--
+
+CREATE TABLE `progres` (
+  `id` int(11) NOT NULL,
+  `group_id` int(11) DEFAULT NULL,
+  `jumlah_progres` int(11) NOT NULL DEFAULT '4',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `progres`
+--
+
+INSERT INTO `progres` (`id`, `group_id`, `jumlah_progres`, `created_at`, `updated_at`) VALUES
+(9, 9, 4, '2018-12-08 17:09:17', '0000-00-00 00:00:00'),
+(11, 11, 3, '2018-12-08 17:09:12', '2018-12-08 09:57:17');
 
 -- --------------------------------------------------------
 
@@ -398,7 +451,9 @@ INSERT INTO `students` (`id`, `nrp`, `name`) VALUES
 (6, '5115100029', 'Andrean Januar Priatmojo'),
 (7, '5115100002', 'akun 1'),
 (8, '5115100054', 'Hidayatul Munawaroh'),
-(9, '5115100701', 'Rozana Firdausi');
+(9, '5115100701', 'Rozana Firdausi'),
+(10, '5115100001', 'Damai Marisa B'),
+(11, '5116100001', 'Daniel Kurniawan');
 
 -- --------------------------------------------------------
 
@@ -423,8 +478,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `personable_id`, `personable_type`, `remember_token`, `created_at`, `updated_at`, `nohp`) VALUES
-(1, 'koorkp', '$2y$10$hzb09Ywpv//YNwiJuDgqVuRAANF4t30dHF8VruRiwAtIFnjRBznmC', 1, 'lecturer', 'LgUlYuSdDTFtSfdBF0gIhmFoAxE90MqubZEPBLx71ux7Tv5aKV58TYpltDnT', '2018-11-30 02:55:40', '2018-11-30 02:55:40', '088123456789'),
-(2, 'tu', '$2y$10$wATgGZgjsj8dohOG9FD.1.Lim9nlmGWAI2JeoxunA.Vc3F.E/CU5q', 2, 'lecturer', NULL, '2016-03-01 14:08:49', '2016-03-01 14:08:49', NULL),
+(1, 'koorkp', '$2y$10$hzb09Ywpv//YNwiJuDgqVuRAANF4t30dHF8VruRiwAtIFnjRBznmC', 1, 'lecturer', 'fkFaclOtIDzwSTr0CluHmO9sF1kIDiZUVCkKQXWNaBB3nxWWK7kOHt3PSFRH', '2018-11-30 02:55:40', '2018-11-30 02:55:40', '088123456789'),
+(2, 'tu', '$2y$10$2/M8MUiMq7HS0X3KVA8bA.qHhd3g9p2STKCAyWONw.JZvz0WkgUN.', 2, 'lecturer', 'HodLnDcFo5woPCC73MewqPF7RghAuoIwN3QiwS2O2QE6nv3XpV8JefosSMUQ', '2016-03-01 14:08:49', '2016-03-01 14:08:49', NULL),
 (3, '051100003', '$2y$10$OTQu4TpvXb0wyG3WuNlVUuF5Afuj7qsr2y4H63rz84zCCIcAXHVOm', 3, 'lecturer', NULL, '2016-03-01 14:08:49', '2016-03-01 14:08:49', NULL),
 (4, '051100008', '$2y$10$3WXMUCgCIn7y4ublNyEF0OUJiijTMOh7l7Nlo5vSWzDGo01KggZg.', 4, 'lecturer', NULL, '2016-03-01 14:08:49', '2016-03-01 14:08:49', NULL),
 (5, '051100012', '$2y$10$W8SahOENlVfjiJdI4x7zGe2li9rEKh1naqYvuuxLGY/rZRggSK6je', 5, 'lecturer', NULL, '2016-03-01 14:08:50', '2016-03-01 14:08:50', NULL),
@@ -497,9 +552,12 @@ INSERT INTO `users` (`id`, `username`, `password`, `personable_id`, `personable_
 (74, '5115100029', '$2y$10$JiRyIAdN8/z50aV/sUYz1OCIBlLUr8/4M5GIceuM9Wqjcuat21hIa', 6, 'student', '6uxe7dBdhbcztbnhuywNEfNVizXPR30DU3n43nOGNzlJ2tdf9EIjBhOdcI3o', '2018-12-04 07:36:54', '2018-12-04 07:36:54', '1234567890'),
 (75, '5115100002', '$2y$10$nowCi7rSLmYIBnuN.5HWoeCoP/BofCQkGhi5itwIGHUNGd5hJG4z6', 7, 'student', 'SxziTJPsIpOiDhouu8OlY1IvLCOb5yei3TqLAp5WTmTroIhj8LJjiPpMr863', '2018-12-06 04:07:05', '2018-12-06 04:07:05', '081333004764'),
 (76, 'dosen', '$2y$10$JiRyIAdN8/z50aV/sUYz1OCIBlLUr8/4M5GIceuM9Wqjcuat21hIa', 71, 'lecturer', 'zcJAYqSRx7rGTh6roKeaLKLyUlAZCLYce3tsgX9MaTiNS3XzFpTJExgOm0y5', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0123456789'),
-(77, '5115100054', '$2y$10$cPxxnW7.94lNgKby1nypAe7wXri4NJEeARleZ6Z9dtEQGvLVa6GdG', 8, 'student', 'VKmiBq1DUbKu1nWCyj1IIDqDg8Uqn7nL2cxl3uzoBoBHdo3cOorCwYnsVtN7', '2018-12-08 03:14:20', '2018-12-08 03:14:20', '088123456789'),
-(78, '87654321', '$2y$10$CJXtLSMrynJRc070e6hvB.qF1v3KnL4y.IbRQvqf3VVGah6v0sQ42', 73, 'lecturer', NULL, '2018-12-08 03:16:19', '2018-12-08 03:16:19', NULL),
-(79, '5115100701', '$2y$10$.DUQZQcQKiFMnfPB8Oyvue5CClKKJUi0eugyWOJcQ2qt1gwOFqX8i', 9, 'student', 'wWScah91sdUPN1BhnypqwE1UVzNhmlL18BEFUwI8jevQKfjqNJsFyWEAN2cV', '2018-12-08 03:18:02', '2018-12-08 03:20:11', '088123456789');
+(77, '5115100054', '$2y$10$cPxxnW7.94lNgKby1nypAe7wXri4NJEeARleZ6Z9dtEQGvLVa6GdG', 8, 'student', 'UU6r4ykmmfASYiTVgQOuHQlev0fxrqVcYcvhVjwyk5DtLR0bbBPznQB6v1mi', '2018-12-08 03:14:20', '2018-12-08 03:14:20', '088123456789'),
+(78, '87654321', '$2y$10$CJXtLSMrynJRc070e6hvB.qF1v3KnL4y.IbRQvqf3VVGah6v0sQ42', 73, 'lecturer', 'maxWhPKkU4mWFd7aVjPqJHAK6Zm1RCIPT4ONB0bBxGcBJQBYjd2TrK7SQqlR', '2018-12-08 03:16:19', '2018-12-08 03:16:19', NULL),
+(79, '5115100701', '$2y$10$.DUQZQcQKiFMnfPB8Oyvue5CClKKJUi0eugyWOJcQ2qt1gwOFqX8i', 9, 'student', 'wWScah91sdUPN1BhnypqwE1UVzNhmlL18BEFUwI8jevQKfjqNJsFyWEAN2cV', '2018-12-08 03:18:02', '2018-12-08 03:20:11', '088123456789'),
+(80, '5115100001', '$2y$10$.Pl9q7ryy71pdbMWLEkOXOWzNFeYG2I3N9HwdUuxvsU3/vTYNLHZa', 10, 'student', 'U06JEG1DoROM41Z01Y8W2az1GK6VH2mJfGFIhi45DzJPiz0XEyXBnoGXb4ZE', '2018-12-08 09:10:49', '2018-12-08 09:10:49', '088123456789'),
+(81, '5116100001', '$2y$10$2/M8MUiMq7HS0X3KVA8bA.qHhd3g9p2STKCAyWONw.JZvz0WkgUN.', 11, 'student', 'If8knZWE3I8ZTrMySLlHv3Ri7Lb2G6KMyZqO2hACE4BdNRv0DNByoCZjnLRt', '2018-12-08 09:12:58', '2018-12-08 09:12:58', '088123456789'),
+(83, '1234567890', '$2y$10$0h/Fo3Xp6MM435U2VCvOw.z5cp9KXQGe8zYEFVNSf16BIdH.2Jq.2', 74, 'lecturer', NULL, '2018-12-08 11:05:08', '2018-12-08 11:05:08', NULL);
 
 --
 -- Indexes for dumped tables
@@ -515,6 +573,12 @@ ALTER TABLE `corporations`
 -- Indexes for table `files`
 --
 ALTER TABLE `files`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `file_progres`
+--
+ALTER TABLE `file_progres`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -567,6 +631,12 @@ ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `progres`
+--
+ALTER TABLE `progres`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `semesters`
 --
 ALTER TABLE `semesters`
@@ -602,34 +672,40 @@ ALTER TABLE `files`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `file_progres`
+--
+ALTER TABLE `file_progres`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `group_requests`
 --
 ALTER TABLE `group_requests`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `lecturers`
 --
 ALTER TABLE `lecturers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `members`
 --
 ALTER TABLE `members`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `mentors`
@@ -641,13 +717,19 @@ ALTER TABLE `mentors`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `progres`
+--
+ALTER TABLE `progres`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `semesters`
@@ -659,13 +741,13 @@ ALTER TABLE `semesters`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

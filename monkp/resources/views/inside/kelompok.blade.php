@@ -489,13 +489,17 @@
                   '<td class="col-xs-1"><input type="text" class="form-control input-sm" id="mentor_grade' + member.id + '" value="0"></td>'+
                   '<td class="col-xs-1"><input type="text" class="form-control input-sm" id="discipline_grade' + member.id + '" value="0"></td>'+
                   '<td class="col-xs-1"><input type="text" class="form-control input-sm" id="report_status' + member.id + '" value="0"></td>' +
-                  '<td class="col-xs-1"><a class="btn btn-default" href="/download_bukti_nilai/' + member.id +'">Lihat Bukti</a></td>'
+                  '<td class="col-xs-1"><a class="btn btn-default disabled" href="/download_bukti_nilai/' + member.id +'">Lihat Bukti</a></td>'
                 ) : (
                   '<td class="col-xs-1"><input type="text" class="form-control input-sm" id="lecturer_grade' + member.id + '" value="'+member.grade.lecturer_grade+'"></td>'+
                   '<td class="col-xs-1"><input type="text" class="form-control input-sm" id="mentor_grade' + member.id + '" value="'+member.grade.mentor_grade+'"></td>'+
                   '<td class="col-xs-1"><input type="text" class="form-control input-sm" id="discipline_grade' + member.id + '" value="'+member.grade.discipline_grade+'"></td>'+
-                  '<td class="col-xs-1"><input type="text" class="form-control input-sm" id="report_status' + member.id + '" value="'+member.grade.report_status+'"></td>' +
-                  '<td class="col-xs-1"><a class="btn btn-default" href="/download_bukti_nilai/' + member.id +'">Lihat Bukti</a></td>'
+                  '<td class="col-xs-1"><input type="text" class="form-control input-sm" id="report_status' + member.id + '" value="'+member.grade.report_status+'"></td>' + (
+                    member.grade.mentor_grade == null ? (
+                      '<td class="col-xs-1"><a class="btn btn-default disabled" href="/download_bukti_nilai/' + member.id +'">Lihat Bukti</a></td>'
+                      ) : (
+                      '<td class="col-xs-1"><a class="btn btn-default" href="/download_bukti_nilai/' + member.id +'">Lihat Bukti</a></td>'
+                      ))
                 )
               )
             ));

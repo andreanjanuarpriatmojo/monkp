@@ -268,33 +268,33 @@
                   <div class="col-md-offset-5">
                     <div class="row">
                       <div class="col-md-12 text-right">
-                        <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#clps{{$group->id}}" class="accordion-toggle">Close</button>
                         @if ($role == 'ADMIN')
-                          <button type="button" class="btn btn-primary" onclick="save({{$group->id}})">Save</button>
-                          <a href="{{url('/pengajuan/destroy/'.$group->id)}}" class="btn btn-danger">
-                            Hapus
-                          </a>
                           @if($status['status']==1)
                             <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#image">Bukti Penerimaan</button>
-                          @endif                      
+                          @endif  
+                          <a href="{{url('/pengajuan/destroy/'.$group->id)}}" class="btn btn-danger">
+                            Hapus
+                          </a> 
+                          <button type="button" class="btn btn-primary" onclick="save({{$group->id}})">Save</button>               
                         @else
                           @if ($role == 'STUDENT')
                             <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#image">Bukti Penerimaan</button> 
+                            @if ($status['status'] == 0 || $status['status'] == 1 && $role == 'STUDENT')
+                            <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#upload">Upload</button>
+                            @endif
+                          @endif
+                          @if ($status['status'] == 2)
+                            <a href="{{url('/progres/'.$group->id)}}" class="btn btn-default">Laporan Progres</a>
+                            <a href="{{url('/group/nilaiPerusahaan/'.$group->id)}}" class="btn btn-default">Masukkan Nilai</a>                         
                           @endif
                           @if ($status['status'] == 0)
                             <a href="{{url('/pengajuan/destroy/'.$group->id)}}" class="btn btn-danger">
                             Hapus
                             </a>
                           @endif
-                          @if ($status['status'] == 0 || $status['status'] == 1)
-                            <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#upload">Upload</button>                          
-                          @endif
-                          @if ($status['status'] == 2)
-                            <a href="{{url('/progres/'.$group->id)}}" class="btn btn-default">Laporan Progres</a>
-                            <a href="{{url('/group/nilaiPerusahaan/'.$group->id)}}" class="btn btn-default">Masukkan Nilai</a>                         
-                          @endif
                           <!--TAMBAH TOMBOL UPLOAD GAMBAR-->
                         @endif
+                        <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#clps{{$group->id}}" class="accordion-toggle">Close</button>
                         </div>
                       </div>
                     </div>

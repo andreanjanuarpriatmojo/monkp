@@ -48,16 +48,19 @@
           </div>
           <div class="col-md-12">
             <table class="table table-bordered text-center">
-              @foreach($file_progres as $file_progres)
+            <!-- {{$a = 0}} -->
+              @foreach($file_progres as $key => $file_progres)
+              <!-- {{$a = $a + 1}} -->
               <thead>
                 <tr>
-                  <th>Progres {{$file_progres->id}}</th>
+                  <th>Progres {{$key+1}}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td class="col-md-2">
                     <a href="{{url('/download_progres/'.$file_progres->id)}}" class="btn btn-default">Lihat</a>
+                    <a href="{{url('/hapus_progres/'.$file_progres->id)}}" method="get" class="btn btn-default">Hapus</a>
                   </td>
                 </tr>
               </tbody>

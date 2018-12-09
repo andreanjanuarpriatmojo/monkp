@@ -29,6 +29,7 @@ class ProgresController extends Controller
     }
 
     public function update(Request $request, $id){
+        // dd($request);
         $role = Auth::user()->role;
         if ($role == 'STUDENT') {
             $foto = "";

@@ -40,6 +40,12 @@
         <p class="text-muted">Upload Laporan Progres KP dalam bentuk pdf</p>
         <input type="file" name="file_progres" class="form-control col-md-3" required>
         <div class="row">
+        <p class="text-muted">Jumlah Progres yang Harus dilakukan Mahasiswa :</p>
+          <div class="col-md-1">
+            <div class="form-group">
+              <input type="text" name="jumlah_progres" class="form-control" value="{{$progres->jumlah_progres}}" disabled>
+            </div>
+          </div>
           <div class="col-md-12">
             <table class="table table-bordered text-center">
               @foreach($file_progres as $file_progres)
@@ -65,7 +71,7 @@
         <div class="row">
           <div class="col-md-1">
             <div class="form-group">
-              <input type="text" name="" class="form-control" value="{{$progres->jumlah_progres}}">
+              <input type="text" name="jumlah_progres" class="form-control" value="{{$progres->jumlah_progres}}">
             </div>
           </div>
           <div class="col-md-12">
@@ -93,7 +99,7 @@
         <div class="row">
           <div class="col-md-10"></div>
           <div class="col-md-2">
-            <button class="btn btn-default">Back</button>
+            <a href="/home" class="btn btn-default">Back</a>
             <button type="submit" class="btn btn-success">Save</button>
           </div>
         </div>

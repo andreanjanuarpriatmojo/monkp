@@ -27,9 +27,9 @@
 			<form>
 				<div class="row">
 					<div class="col-md-10">
-						<table class="table table-bordered">
+						<table class="table table-bordered text-center">
 							<thead>
-								<tr >
+								<tr>
 									<th style="text-align: center">NRP</th>
 		                          	<th style="text-align: center">Nama Mahasiswa</th>
 		                          	<th style="text-align: center">Status</th>
@@ -65,12 +65,15 @@
 					                @endif
 					              </td>
 					              @if($group->status_buku == 0)
-					              	<td class="btn btn-danger" disabled>Belum</td>
+					              <td>
+					              	<button class="btn btn-danger" disabled>Belum</button>
+					              </td>
 					              @else
-					              	<td class="btn btn-success" disabled>Selesai</td>
+					              <td>
+					              	<button class="btn btn-success" disabled>Selesai</button>
+					              </td>
 					              @endif
 					              <td class="col-sm-3">
-	                          		<div class="col-sm-4"></div>
 	                          		@if($group->status_buku == 0)
 	                            	<div class="form-group">
 	                                	<a href="{{url('/setujui_pengumpulan_buku/'.$group->id)}}" type="button" class="btn btn-warning">Kumpulkan</a>

@@ -57,17 +57,15 @@
                 <tr>
                   <th>Progres ke - </th>
                   <th></th>
-                </tr>
               </thead>
               <tbody>
-                @foreach($file_progres as $file_progres)
+                @foreach($file_progres as $key => $file_progres)
                 <tr>
-                  
-                  <td>{{$file_progres->id}}</td>
+                  <td>Progres {{$key+1}}</td>
                   <td>
                     <a href="{{url('/download_progres/'.$file_progres->id)}}" class="btn btn-default">Lihat</a>
+                    <a href="{{url('/hapus_progres/'.$file_progres->id)}}" method="get" class="btn btn-default">Hapus</a>
                   </td>
-                  
                 </tr>
                 @endforeach
               </tbody>

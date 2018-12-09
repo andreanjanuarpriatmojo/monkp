@@ -64,5 +64,13 @@ class ProgresController extends Controller
 
         return Response::download($filepath);
     }
+
+    public function destroy($id)
+    {
+        // dd($id);
+        $progres = FileProgres::where('id', $id)->delete();
+
+        return back();
+    }
 }
  

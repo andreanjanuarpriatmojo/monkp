@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('/pengajuan/mentor/{id}', 'GroupController@updateMentor');
 		Route::get('/pengajuan/comnt/{id}','PengajuanController@comnt');
 		Route::get('/pengajuan/nohp/','PengajuanController@nohp');
+		Route::get('/hapus_progres/{id}', 'ProgresController@destroy');
 	});
 	Route::group(['middleware'=>['admin']],function(){
 		Route::get('/pengajuan/update/{id}', 'GroupController@update');

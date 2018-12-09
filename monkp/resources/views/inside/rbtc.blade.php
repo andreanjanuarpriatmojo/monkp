@@ -74,12 +74,7 @@
 					              </td>
 					              @endif
 					              <td class="col-sm-3">
-<<<<<<< HEAD
-	                          		<div class="col-sm-4"></div>
 	                          		@if($group->status_buku == "Belum")
-=======
-	                          		@if($group->status_buku == 0)
->>>>>>> 5e777302c10bc8174e73a6b93d6ab44dd4ba66bb
 	                            	<div class="form-group">
 	                                	<a href="{{url('/setujui_pengumpulan_buku/'.$group->id)}}" type="button" class="btn btn-warning">Kumpulkan</a>
 	                            	</div>

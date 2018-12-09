@@ -38,30 +38,39 @@
       <div class="panel-body">
       @if ($role == 'STUDENT')
         <p class="text-muted">Upload Laporan Progres KP dalam bentuk pdf</p>
-        <input type="file" name="file_progres" class="form-control col-md-3" required>
         <div class="row">
-        <p class="text-muted">Jumlah Progres yang Harus dilakukan Mahasiswa :</p>
+          <div class="form-group col-md-3">
+            <input type="file" name="file_progres" class="form-control" required>
+          </div>
+        </div>
+        <p class="text-muted"">Jumlah Progres yang Harus dilakukan Mahasiswa :</p>
+        <div class="row">
           <div class="col-md-1">
             <div class="form-group">
               <input type="text" name="jumlah_progres" class="form-control" value="{{$progres->jumlah_progres}}" disabled>
             </div>
           </div>
-          <div class="col-md-12">
+          <div class="col-md-12"></div>
+          <div class="col-md-3">
             <table class="table table-bordered text-center">
-              @foreach($file_progres as $file_progres)
               <thead>
                 <tr>
-                  <th>Progres {{$file_progres->id}}</th>
+                  <th>Progres ke - </th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
+                @foreach($file_progres as $file_progres)
                 <tr>
-                  <td class="col-md-2">
+                  
+                  <td>{{$file_progres->id}}</td>
+                  <td>
                     <a href="{{url('/download_progres/'.$file_progres->id)}}" class="btn btn-default">Lihat</a>
                   </td>
+                  
                 </tr>
+                @endforeach
               </tbody>
-              @endforeach
             </table>
           </div>
         </div>

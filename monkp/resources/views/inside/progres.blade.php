@@ -51,7 +51,7 @@
             </div>
           </div>
           <div class="col-md-12"></div>
-          <div class="col-md-3">
+          <div class="col-md-5">
             <table class="table table-bordered text-center">
               <thead>
                 <tr>
@@ -61,10 +61,10 @@
               <tbody>
                 @foreach($file_progres as $key => $file_progres)
                 <tr>
-                  <td>Progres {{$key+1}}</td>
+                  <td>{{$key+1}}</td>
                   <td>
-                    <a href="{{url('/download_progres/'.$file_progres->id)}}" class="btn btn-default">Lihat</a>
-                    <a href="{{url('/hapus_progres/'.$file_progres->id)}}" method="get" class="btn btn-default">Hapus</a>
+                    <a href="{{url('/download_progres/'.$file_progres->id)}}" class="btn btn-primary">Lihat</a>
+                    <a href="{{url('/hapus_progres/'.$file_progres->id)}}" method="get" class="btn btn-danger">Hapus</a>
                   </td>
                 </tr>
                 @endforeach
@@ -81,22 +81,25 @@
               <input type="text" name="jumlah_progres" class="form-control" value="{{$progres->jumlah_progres}}">
             </div>
           </div>
-          <div class="col-md-12">
+          <div class="col-md-12"></div>
+          <div class="col-md-5">
             <table class="table table-bordered text-center">
-              @foreach($file_progres as $file_progres)
               <thead>
                 <tr>
-                  <th>Progres {{$file_progres->id}}</th>
+                  <th>Progres ke - </th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
+                @foreach($file_progres as $key => $file_progres)
                 <tr>
-                  <td class="col-md-2">
-                    <a href="{{url('/download_progres/'.$file_progres->id)}}" class="btn btn-default">Lihat</a>
+                  <td>{{$key+1}}</td>
+                  <td>
+                    <a href="{{url('/download_progres/'.$file_progres->id)}}" class="btn btn-primary">Lihat</a>
                   </td>
                 </tr>
+                @endforeach
               </tbody>
-              @endforeach
             </table>
           </div>
         </div>

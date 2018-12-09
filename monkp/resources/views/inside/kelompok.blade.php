@@ -265,7 +265,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-offset-6">
+                  <div class="col-md-offset-5">
                     <div class="row">
                       <div class="col-md-12 text-right">
                         <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#clps{{$group->id}}" class="accordion-toggle">Close</button>

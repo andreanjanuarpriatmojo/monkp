@@ -448,7 +448,7 @@ class GroupController extends Controller {
 	{
 		$group = Group::where('id', $id)->first();
 
-		$group->status_buku = 1;
+		$group->status_buku = "Sudah";
 		$group->save();
 
 		return Redirect::back();

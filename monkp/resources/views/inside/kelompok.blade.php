@@ -500,7 +500,7 @@
                   '<td class="col-xs-1"><input type="text" class="form-control input-sm" id="mentor_grade' + member.id + '" value="'+member.grade.mentor_grade+'"></td>'+
                   '<td class="col-xs-1"><input type="text" class="form-control input-sm" id="discipline_grade' + member.id + '" value="'+member.grade.discipline_grade+'"></td>'+
                   '<td class="col-xs-1"><input type="text" class="form-control input-sm" id="report_status' + member.id + '" value="'+member.grade.report_status+'"></td>' + 
-                  '<td class="col-xs-1"><input type="text" class="form-control input-sm" id="status_buku' + member.id + '" value="kosong"></td>'+(
+                  '<td class="col-xs-2"><input type="text" class="form-control input-sm" id="status_buku' + member.id + '" value="'+group.status_buku+'" disabled></td>'+(
                     member.grade.mentor_grade == null ? (
                       '<td class="col-xs-1"><a class="btn btn-default disabled" href="/download_bukti_nilai/' + member.id +'">Lihat Bukti</a></td>'
                       ) : (

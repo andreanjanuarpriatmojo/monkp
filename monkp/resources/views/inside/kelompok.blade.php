@@ -457,7 +457,7 @@
           console.log(group);
           
           $table = $('<table nowrap class="table table-striped table-bordered">')
-            .append('<tr><th>Nama</th><th>NRP</th><th>Internal</th><th>Eksternal</th><th>Displin</th><th>Laporan</th><th></th></tr>');
+            .append('<tr><th>Nama</th><th>NRP</th><th>Internal</th><th>Eksternal</th><th>Displin</th><th>Laporan</th><th>Buku</th><th></th></tr>');
           @if ($role != 'LECTURER' && $role != 'ADMIN')
           for (member of group.members) {
             console.log(member);
@@ -468,12 +468,17 @@
                   '<td class="col-xs-1">-></td>'+
                   '<td class="col-xs-1">-></td>'+
                   '<td class="col-xs-1">-></td>'+
+                  '<td class="col-xs-1">-></td>'+
+                  '<td class="col-xs-1">-></td>'+
                   '<td class="col-xs-1">-></td>'
                 ) : (
                   '<td class="col-xs-1">' + member.grade.lecturer_grade+ ' </td>'+
                   '<td class="col-xs-1">' + member.grade.mentor_grade+ ' </td>'+
                   '<td class="col-xs-1">' + member.grade.discipline_grade+ ' </td>'+
-                  '<td class="col-xs-1">' + member.grade.report_status+ ' </td>'
+                  '<td class="col-xs-1">' + member.grade.report_status+ ' </td>'+
+                  '<td class="col-xs-1">' + member.group.status_buku+ ' </td>'+
+                  '<td class="col-xs-1"><a class="btn btn-default disabled" href="/download_bukti_nilai/' + member.id +'">Lihat Bukti</a></td>'
+
                 )
               )
             ));
@@ -494,7 +499,8 @@
                   '<td class="col-xs-1"><input type="text" class="form-control input-sm" id="lecturer_grade' + member.id + '" value="'+member.grade.lecturer_grade+'"></td>'+
                   '<td class="col-xs-1"><input type="text" class="form-control input-sm" id="mentor_grade' + member.id + '" value="'+member.grade.mentor_grade+'"></td>'+
                   '<td class="col-xs-1"><input type="text" class="form-control input-sm" id="discipline_grade' + member.id + '" value="'+member.grade.discipline_grade+'"></td>'+
-                  '<td class="col-xs-1"><input type="text" class="form-control input-sm" id="report_status' + member.id + '" value="'+member.grade.report_status+'"></td>' + (
+                  '<td class="col-xs-1"><input type="text" class="form-control input-sm" id="report_status' + member.id + '" value="'+member.grade.report_status+'"></td>' + 
+                  '<td class="col-xs-1"><input type="text" class="form-control input-sm" id="status_buku' + member.id + '" value="kosong"></td>'+(
                     member.grade.mentor_grade == null ? (
                       '<td class="col-xs-1"><a class="btn btn-default disabled" href="/download_bukti_nilai/' + member.id +'">Lihat Bukti</a></td>'
                       ) : (
